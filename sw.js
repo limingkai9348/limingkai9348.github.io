@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baby-cards-v1';
+const CACHE_NAME = 'baby-cards-v2';
 
 const CORE_FILES = [
   '/',
