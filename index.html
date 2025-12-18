@@ -58,6 +58,9 @@ h1 {
 </div>
 
 <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 function openPack(id) {
   location.href = `view.html?pack=${id}`;
 }
