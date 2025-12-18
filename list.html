@@ -46,12 +46,10 @@ h1 {
 <div class="list" id="list"></div>
 
 <script>
-// 注册 SW
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
 
-// 加载图片包列表
 fetch('data/packs.json')
   .then(res => res.json())
   .then(packs => {
@@ -62,7 +60,7 @@ fetch('data/packs.json')
       div.className = 'item';
       div.textContent = p.title;
       div.onclick = () => {
-        location.href = `view.html?pack=${p.id}`;
+        location.href = `index.html?pack=${p.id}`;
       };
       root.appendChild(div);
     });

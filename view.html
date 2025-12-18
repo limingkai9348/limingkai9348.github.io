@@ -81,11 +81,7 @@ const pack = new URLSearchParams(location.search).get('pack');
 
 // 加载图片包数据
 fetch(`data/${pack}.json`)
-  .then(res => res.json())
-  .then(data => {
-    cards = data;
-    show();
-  });
+
 
 function show() {
   const item = cards[index];
