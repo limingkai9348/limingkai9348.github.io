@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta
+  name="viewport"
+  content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+/>
+<title>宝宝识物</title>
+
+<style>
+body {
+  margin: 0;
+  background: #fff;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont;
+}
+
+.card {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card img {
+  max-width: 90vw;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.word {
+  margin-top: 20px;
+  font-size: 48px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <img id="image">
+  <div class="word" id="word"></div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+// =============================
+// ① 最小数据（后面你可以换成 JSON）
+// =============================
+const cards = [
+  {
+    name: "苹果",
+    image: "assets/images/apple.jpg",
+    audio: "assets/audio/apple.mp3"
+  },
+  {
+    name: "小猫",
+    image: "assets/images/cat.jpg",
+    audio: "assets/audio/cat.mp3"
+  }
+];
+
+let index = 0;
+
+const image = document.getElementById('image');
+const word  = document.getElementById('word');
+const audio = document.getElementById('audio');
+
+// =============================
+// ② 显示卡片
+// =============================
+function show() {
+  const item = cards[index];
+  image.src = item.image;
+  word.textContent = item.name;
+  audio.src = item.audio;
+  audio.play();
+}
+
+// =============================
+// ③ 点击播放
+// =============================
+document.getElementById('card').addEventListener('click', () => {
+  audio.play();
+});
+
+// =============================
+// ④ 左右滑动
+// =============================
+let startX = 0;
+
+document.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - startX;
+
+  if (dx > 50 && index > 0) {
+    index--;
+    show();
+  }
+
+  if (dx < -50 && index < cards.length - 1) {
+    index++;
+    show();
+  }
+});
+
+// =============================
+// ⑤ 初始化
+// =============================
+show();
+</script>
+
+</body>
+</html>
