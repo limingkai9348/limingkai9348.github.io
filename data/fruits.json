@@ -2,350 +2,350 @@
   {
     "id": 200,
     "name": "苹果",
-    "image": "assets/fruits/200.jpg",
+    "image": "assets/fruits/200.JPG",
     "audio": "assets/fruits/200.mp3",
     "description": ""
   },
   {
     "id": 201,
     "name": "香蕉",
-    "image": "assets/fruits/201.jpg",
+    "image": "assets/fruits/201.JPG",
     "audio": "assets/fruits/201.mp3",
     "description": ""
   },
   {
     "id": 202,
     "name": "草莓",
-    "image": "assets/fruits/202.jpg",
+    "image": "assets/fruits/202.JPG",
     "audio": "assets/fruits/202.mp3",
     "description": ""
   },
   {
     "id": 203,
     "name": "葡萄",
-    "image": "assets/fruits/203.jpg",
+    "image": "assets/fruits/203.JPG",
     "audio": "assets/fruits/203.mp3",
     "description": ""
   },
   {
     "id": 204,
     "name": "西瓜",
-    "image": "assets/fruits/204.jpg",
+    "image": "assets/fruits/204.JPG",
     "audio": "assets/fruits/204.mp3",
     "description": ""
   },
   {
     "id": 205,
     "name": "橘子",
-    "image": "assets/fruits/205.jpg",
+    "image": "assets/fruits/205.JPG",
     "audio": "assets/fruits/205.mp3",
     "description": ""
   },
   {
     "id": 206,
     "name": "桃子",
-    "image": "assets/fruits/206.jpg",
+    "image": "assets/fruits/206.JPG",
     "audio": "assets/fruits/206.mp3",
     "description": ""
   },
   {
     "id": 207,
     "name": "梨",
-    "image": "assets/fruits/207.jpg",
+    "image": "assets/fruits/207.JPG",
     "audio": "assets/fruits/207.mp3",
     "description": ""
   },
   {
     "id": 208,
     "name": "菠萝",
-    "image": "assets/fruits/208.jpg",
+    "image": "assets/fruits/208.JPG",
     "audio": "assets/fruits/208.mp3",
     "description": ""
   },
   {
     "id": 209,
     "name": "芒果",
-    "image": "assets/fruits/209.jpg",
+    "image": "assets/fruits/209.JPG",
     "audio": "assets/fruits/209.mp3",
     "description": ""
   },
   {
     "id": 210,
     "name": "樱桃",
-    "image": "assets/fruits/210.jpg",
+    "image": "assets/fruits/210.JPG",
     "audio": "assets/fruits/210.mp3",
     "description": ""
   },
   {
     "id": 211,
     "name": "猕猴桃",
-    "image": "assets/fruits/211.jpg",
+    "image": "assets/fruits/211.JPG",
     "audio": "assets/fruits/211.mp3",
     "description": ""
   },
   {
     "id": 212,
     "name": "蓝莓",
-    "image": "assets/fruits/212.jpg",
+    "image": "assets/fruits/212.JPG",
     "audio": "assets/fruits/212.mp3",
     "description": ""
   },
   {
     "id": 213,
     "name": "石榴",
-    "image": "assets/fruits/213.jpg",
+    "image": "assets/fruits/213.JPG",
     "audio": "assets/fruits/213.mp3",
     "description": ""
   },
   {
     "id": 214,
     "name": "柚子",
-    "image": "assets/fruits/214.jpg",
+    "image": "assets/fruits/214.JPG",
     "audio": "assets/fruits/214.mp3",
     "description": ""
   },
   {
     "id": 215,
     "name": "荔枝",
-    "image": "assets/fruits/215.jpg",
+    "image": "assets/fruits/215.JPG",
     "audio": "assets/fruits/215.mp3",
     "description": ""
   },
   {
     "id": 216,
     "name": "龙眼",
-    "image": "assets/fruits/216.jpg",
+    "image": "assets/fruits/216.JPG",
     "audio": "assets/fruits/216.mp3",
     "description": ""
   },
   {
     "id": 217,
     "name": "哈密瓜",
-    "image": "assets/fruits/217.jpg",
+    "image": "assets/fruits/217.JPG",
     "audio": "assets/fruits/217.mp3",
     "description": ""
   },
   {
     "id": 218,
     "name": "甜瓜",
-    "image": "assets/fruits/218.jpg",
+    "image": "assets/fruits/218.JPG",
     "audio": "assets/fruits/218.mp3",
     "description": ""
   },
   {
     "id": 219,
     "name": "木瓜",
-    "image": "assets/fruits/219.jpg",
+    "image": "assets/fruits/219.JPG",
     "audio": "assets/fruits/219.mp3",
     "description": ""
   },
   {
     "id": 220,
     "name": "山竹",
-    "image": "assets/fruits/220.jpg",
+    "image": "assets/fruits/220.JPG",
     "audio": "assets/fruits/220.mp3",
     "description": ""
   },
   {
     "id": 221,
     "name": "椰子",
-    "image": "assets/fruits/221.jpg",
+    "image": "assets/fruits/221.JPG",
     "audio": "assets/fruits/221.mp3",
     "description": ""
   },
   {
     "id": 222,
     "name": "榴莲",
-    "image": "assets/fruits/222.jpg",
+    "image": "assets/fruits/222.JPG",
     "audio": "assets/fruits/222.mp3",
     "description": ""
   },
   {
     "id": 223,
     "name": "牛油果",
-    "image": "assets/fruits/223.jpg",
+    "image": "assets/fruits/223.JPG",
     "audio": "assets/fruits/223.mp3",
     "description": ""
   },
   {
     "id": 224,
     "name": "柠檬",
-    "image": "assets/fruits/224.jpg",
+    "image": "assets/fruits/224.JPG",
     "audio": "assets/fruits/224.mp3",
     "description": ""
   },
   {
     "id": 225,
     "name": "橙子",
-    "image": "assets/fruits/225.jpg",
+    "image": "assets/fruits/225.JPG",
     "audio": "assets/fruits/225.mp3",
     "description": ""
   },
   {
     "id": 226,
     "name": "火龙果",
-    "image": "assets/fruits/226.jpg",
+    "image": "assets/fruits/226.JPG",
     "audio": "assets/fruits/226.mp3",
     "description": ""
   },
   {
     "id": 227,
     "name": "杏子",
-    "image": "assets/fruits/227.jpg",
+    "image": "assets/fruits/227.JPG",
     "audio": "assets/fruits/227.mp3",
     "description": ""
   },
   {
     "id": 228,
     "name": "李子",
-    "image": "assets/fruits/228.jpg",
+    "image": "assets/fruits/228.JPG",
     "audio": "assets/fruits/228.mp3",
     "description": ""
   },
   {
     "id": 229,
     "name": "柿子",
-    "image": "assets/fruits/229.jpg",
+    "image": "assets/fruits/229.JPG",
     "audio": "assets/fruits/229.mp3",
     "description": ""
   },
   {
     "id": 230,
     "name": "桑葚",
-    "image": "assets/fruits/230.jpg",
+    "image": "assets/fruits/230.JPG",
     "audio": "assets/fruits/230.mp3",
     "description": ""
   },
   {
     "id": 231,
     "name": "无花果",
-    "image": "assets/fruits/231.jpg",
+    "image": "assets/fruits/231.JPG",
     "audio": "assets/fruits/231.mp3",
     "description": ""
   },
   {
     "id": 232,
     "name": "杨桃",
-    "image": "assets/fruits/232.jpg",
+    "image": "assets/fruits/232.JPG",
     "audio": "assets/fruits/232.mp3",
     "description": ""
   },
   {
     "id": 233,
     "name": "莲雾",
-    "image": "assets/fruits/233.jpg",
+    "image": "assets/fruits/233.JPG",
     "audio": "assets/fruits/233.mp3",
     "description": ""
   },
   {
     "id": 234,
     "name": "枇杷",
-    "image": "assets/fruits/234.jpg",
+    "image": "assets/fruits/234.JPG",
     "audio": "assets/fruits/234.mp3",
     "description": ""
   },
   {
     "id": 235,
     "name": "番石榴",
-    "image": "assets/fruits/235.jpg",
+    "image": "assets/fruits/235.JPG",
     "audio": "assets/fruits/235.mp3",
     "description": ""
   },
   {
     "id": 236,
     "name": "百香果",
-    "image": "assets/fruits/236.jpg",
+    "image": "assets/fruits/236.JPG",
     "audio": "assets/fruits/236.mp3",
     "description": ""
   },
   {
     "id": 237,
     "name": "山楂",
-    "image": "assets/fruits/237.jpg",
+    "image": "assets/fruits/237.JPG",
     "audio": "assets/fruits/237.mp3",
     "description": ""
   },
   {
     "id": 238,
     "name": "枸杞",
-    "image": "assets/fruits/238.jpg",
+    "image": "assets/fruits/238.JPG",
     "audio": "assets/fruits/238.mp3",
     "description": ""
   },
   {
     "id": 239,
     "name": "枣",
-    "image": "assets/fruits/239.jpg",
+    "image": "assets/fruits/239.JPG",
     "audio": "assets/fruits/239.mp3",
     "description": ""
   },
   {
     "id": 240,
     "name": "金桔",
-    "image": "assets/fruits/240.jpg",
+    "image": "assets/fruits/240.JPG",
     "audio": "assets/fruits/240.mp3",
     "description": ""
   },
   {
     "id": 241,
     "name": "西梅",
-    "image": "assets/fruits/241.jpg",
+    "image": "assets/fruits/241.JPG",
     "audio": "assets/fruits/241.mp3",
     "description": ""
   },
   {
     "id": 242,
     "name": "覆盆子",
-    "image": "assets/fruits/242.jpg",
+    "image": "assets/fruits/242.JPG",
     "audio": "assets/fruits/242.mp3",
     "description": ""
   },
   {
     "id": 243,
     "name": "指橙",
-    "image": "assets/fruits/243.jpg",
+    "image": "assets/fruits/243.JPG",
     "audio": "assets/fruits/243.mp3",
     "description": ""
   },
   {
     "id": 244,
     "name": "杨梅",
-    "image": "assets/fruits/244.jpg",
+    "image": "assets/fruits/244.JPG",
     "audio": "assets/fruits/244.mp3",
     "description": ""
   },
   {
     "id": 245,
     "name": "沙果",
-    "image": "assets/fruits/245.jpg",
+    "image": "assets/fruits/245.JPG",
     "audio": "assets/fruits/245.mp3",
     "description": ""
   },
   {
     "id": 246,
     "name": "释迦",
-    "image": "assets/fruits/246.jpg",
+    "image": "assets/fruits/246.JPG",
     "audio": "assets/fruits/246.mp3",
     "description": ""
   },
   {
     "id": 247,
     "name": "荸荠",
-    "image": "assets/fruits/247.jpg",
+    "image": "assets/fruits/247.JPG",
     "audio": "assets/fruits/247.mp3",
     "description": ""
   },
   {
     "id": 248,
     "name": "人参果",
-    "image": "assets/fruits/248.jpg",
+    "image": "assets/fruits/248.JPG",
     "audio": "assets/fruits/248.mp3",
     "description": ""
   },
   {
     "id": 249,
     "name": "乌梅",
-    "image": "assets/fruits/249.jpg",
+    "image": "assets/fruits/249.JPG",
     "audio": "assets/fruits/249.mp3",
     "description": ""
   }
