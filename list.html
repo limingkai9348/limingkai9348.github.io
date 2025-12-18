@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
   content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>选择图片包</title>
+<title>选择卡片</title>
 
 <style>
 body {
@@ -12,57 +12,47 @@ body {
   background: #f7f7f7;
   font-family: -apple-system, BlinkMacSystemFont;
 }
-
 h1 {
   text-align: center;
   padding: 16px 0;
 }
-
 .list {
   max-width: 500px;
   margin: 0 auto;
 }
-
 .item {
   background: #fff;
-  margin: 12px 16px;
-  padding: 20px;
-  font-size: 24px;
+  margin: 10px 16px;
+  padding: 18px;
+  font-size: 22px;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.item:active {
-  background: #eee;
 }
 </style>
 </head>
 
 <body>
 
-<h1>选择图片包</h1>
-
+<h1 id="title">请选择</h1>
 <div class="list" id="list"></div>
 
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+const pack = new URLSearchParams(location.search).get('pack');
+if (!pack) location.href = 'index.html';
 
-fetch('data/packs.json')
-  .then(res => res.json())
-  .then(packs => {
-    const root = document.getElementById('list');
-
-    packs.forEach(p => {
+fetch(`data/${pack}.json`)
+  .then(r => r.json())
+  .then(cards => {
+    const list = document.getElementById('list');
+    cards.forEach((c, i) => {
       const div = document.createElement('div');
       div.className = 'item';
-      div.textContent = p.title;
+      div.textContent = c.name;
       div.onclick = () => {
-        location.href = `index.html?pack=${p.id}`;
+        location.href = `view.html?pack=${pack}&index=${i}`;
       };
-      root.appendChild(div);
+      list.appendChild(div);
     });
   });
 </script>

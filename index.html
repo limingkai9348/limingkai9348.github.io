@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
   content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>选择图片包</title>
+<title>选择图包</title>
 
 <style>
 body {
@@ -12,17 +12,10 @@ body {
   background: #f7f7f7;
   font-family: -apple-system, BlinkMacSystemFont;
 }
-
 h1 {
   text-align: center;
   padding: 16px 0;
 }
-
-.list {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
 .item {
   background: #fff;
   margin: 12px 16px;
@@ -32,37 +25,25 @@ h1 {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
-.item:active {
-  background: #eee;
-}
 </style>
 </head>
 
 <body>
 
-<h1>选择图片包</h1>
-
-<div class="list" id="list"></div>
+<h1>选择图包</h1>
+<div id="list"></div>
 
 <script>
-// 注册 SW
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-
-// 加载图片包列表
 fetch('data/packs.json')
-  .then(res => res.json())
+  .then(r => r.json())
   .then(packs => {
     const root = document.getElementById('list');
-
     packs.forEach(p => {
       const div = document.createElement('div');
       div.className = 'item';
       div.textContent = p.title;
       div.onclick = () => {
-        location.href = `view.html?pack=${p.id}`;
+        location.href = `list.html?pack=${p.id}`;
       };
       root.appendChild(div);
     });

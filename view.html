@@ -112,7 +112,9 @@ const pack = new URLSearchParams(location.search).get('pack');
 if (!pack) location.href = 'index.html';
 
 let cards = [];
-let index = 0;
+const startIndex =
+  parseInt(new URLSearchParams(location.search).get('index')) || 0;
+let index = startIndex;
 
 const image = document.getElementById('image');
 const word  = document.getElementById('word');
