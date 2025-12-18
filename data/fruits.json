@@ -1,14 +1,16 @@
 [
   {
+    "id": 1,
     "name": "苹果",
-    "image": "assets/images/apple.jpg",
-    "audio": "assets/audio/apple.mp3",
+    "image": "assets/fruits/1.jpg",
+    "audio": "assets/fruits/1.mp3",
     "description": "苹果是一种常见的水果，富含维生素和纤维，有助于健康。"
   },
   {
+    "id": 2,
     "name": "香蕉",
-    "image": "assets/images/banana.jpg",
-    "audio": "assets/audio/banana.mp3",
+    "image": "assets/fruits/2.jpg",
+    "audio": "assets/fruits/2.mp3",
     "description": "香蕉是一种营养丰富的水果，含有丰富的钾元素，有助于补充能量。"
   }
 ]
