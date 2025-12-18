@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-  <meta charset="utf-8">
-  <title>测试页面</title>
+<meta charset="utf-8">
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0,user-scalable=no"
+/>
+<title>宝宝识物</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 16px;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont;
+}
+
+h1 {
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.pack {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.pack img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.pack-title {
+  margin-top: 8px;
+  font-size: 18px;
+}
+</style>
 </head>
+
 <body>
-  <h1>Hello 宝宝识物</h1>
+
+<h1>宝宝识物</h1>
+
+<div class="grid">
+  <div class="pack" onclick="openPack('fruits')">
+    <img src="assets/images/fruits_cover.jpg">
+    <div class="pack-title">水果</div>
+  </div>
+</div>
+
+<script>
+function openPack(id) {
+  location.href = `view.html?pack=${id}`;
+}
+</script>
+
 </body>
 </html>

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "苹果",
+    "image": "assets/images/apple.jpg",
+    "audio": "assets/audio/apple.mp3"
+  },
+  {
+    "name": "香蕉",
+    "image": "assets/images/banana.jpg",
+    "audio": "assets/audio/banana.mp3"
+  }
+]

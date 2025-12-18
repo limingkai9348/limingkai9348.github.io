@@ -16,6 +16,19 @@ body {
   font-family: -apple-system, BlinkMacSystemFont;
 }
 
+.back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  font-size: 20px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.85);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
 .card {
   width: 100vw;
   height: 100vh;
@@ -41,6 +54,8 @@ body {
 
 <body>
 
+<div class="back" onclick="goBack()">← 返回</div>
+
 <div class="card" id="card">
   <img id="image">
   <div class="word" id="word"></div>
@@ -49,31 +64,24 @@ body {
 <audio id="audio"></audio>
 
 <script>
-// =============================
-// ① 最小数据（后面你可以换成 JSON）
-// =============================
-const cards = [
-  {
-    name: "苹果",
-    image: "assets/images/apple.jpg",
-    audio: "assets/audio/apple.mp3"
-  },
-  {
-    name: "小猫",
-    image: "assets/images/cat.jpg",
-    audio: "assets/audio/cat.mp3"
-  }
-];
-
+let cards = [];
 let index = 0;
 
 const image = document.getElementById('image');
 const word  = document.getElementById('word');
 const audio = document.getElementById('audio');
 
-// =============================
-// ② 显示卡片
-// =============================
+// 从 URL 读 pack
+const pack = new URLSearchParams(location.search).get('pack');
+
+// 加载图片包数据
+fetch(`data/${pack}.json`)
+  .then(res => res.json())
+  .then(data => {
+    cards = data;
+    show();
+  });
+
 function show() {
   const item = cards[index];
   image.src = item.image;
@@ -82,22 +90,17 @@ function show() {
   audio.play();
 }
 
-// =============================
-// ③ 点击播放
-// =============================
-document.getElementById('card').addEventListener('click', () => {
-  audio.play();
-});
+document.getElementById('card').onclick = () => audio.play();
 
-// =============================
-// ④ 左右滑动
-// =============================
+function goBack() {
+  location.href = 'index.html';
+}
+
+// 滑动
 let startX = 0;
-
 document.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
 });
-
 document.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - startX;
 
@@ -111,11 +114,6 @@ document.addEventListener('touchend', e => {
     show();
   }
 });
-
-// =============================
-// ⑤ 初始化
-// =============================
-show();
 </script>
 
 </body>
