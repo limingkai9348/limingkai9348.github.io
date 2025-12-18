@@ -1,0 +1,352 @@
+[
+  {
+    "id": 250,
+    "name": "土豆",
+    "image": "assets/fruits/250.jpg",
+    "audio": "assets/fruits/250.mp3",
+    "description": ""
+  },
+  {
+    "id": 251,
+    "name": "番茄",
+    "image": "assets/fruits/251.jpg",
+    "audio": "assets/fruits/251.mp3",
+    "description": ""
+  },
+  {
+    "id": 252,
+    "name": "黄瓜",
+    "image": "assets/fruits/252.jpg",
+    "audio": "assets/fruits/252.mp3",
+    "description": ""
+  },
+  {
+    "id": 253,
+    "name": "胡萝卜",
+    "image": "assets/fruits/253.jpg",
+    "audio": "assets/fruits/253.mp3",
+    "description": ""
+  },
+  {
+    "id": 254,
+    "name": "白菜",
+    "image": "assets/fruits/254.jpg",
+    "audio": "assets/fruits/254.mp3",
+    "description": ""
+  },
+  {
+    "id": 255,
+    "name": "青菜",
+    "image": "assets/fruits/255.jpg",
+    "audio": "assets/fruits/255.mp3",
+    "description": ""
+  },
+  {
+    "id": 256,
+    "name": "菠菜",
+    "image": "assets/fruits/256.jpg",
+    "audio": "assets/fruits/256.mp3",
+    "description": ""
+  },
+  {
+    "id": 257,
+    "name": "玉米",
+    "image": "assets/fruits/257.jpg",
+    "audio": "assets/fruits/257.mp3",
+    "description": ""
+  },
+  {
+    "id": 258,
+    "name": "南瓜",
+    "image": "assets/fruits/258.jpg",
+    "audio": "assets/fruits/258.mp3",
+    "description": ""
+  },
+  {
+    "id": 259,
+    "name": "西兰花",
+    "image": "assets/fruits/259.jpg",
+    "audio": "assets/fruits/259.mp3",
+    "description": ""
+  },
+  {
+    "id": 260,
+    "name": "花椰菜",
+    "image": "assets/fruits/260.jpg",
+    "audio": "assets/fruits/260.mp3",
+    "description": ""
+  },
+  {
+    "id": 261,
+    "name": "茄子",
+    "image": "assets/fruits/261.jpg",
+    "audio": "assets/fruits/261.mp3",
+    "description": ""
+  },
+  {
+    "id": 262,
+    "name": "辣椒",
+    "image": "assets/fruits/262.jpg",
+    "audio": "assets/fruits/262.mp3",
+    "description": ""
+  },
+  {
+    "id": 263,
+    "name": "洋葱",
+    "image": "assets/fruits/263.jpg",
+    "audio": "assets/fruits/263.mp3",
+    "description": ""
+  },
+  {
+    "id": 264,
+    "name": "大蒜",
+    "image": "assets/fruits/264.jpg",
+    "audio": "assets/fruits/264.mp3",
+    "description": ""
+  },
+  {
+    "id": 265,
+    "name": "大葱",
+    "image": "assets/fruits/265.jpg",
+    "audio": "assets/fruits/265.mp3",
+    "description": ""
+  },
+  {
+    "id": 266,
+    "name": "芹菜",
+    "image": "assets/fruits/266.jpg",
+    "audio": "assets/fruits/266.mp3",
+    "description": ""
+  },
+  {
+    "id": 267,
+    "name": "萝卜",
+    "image": "assets/fruits/267.jpg",
+    "audio": "assets/fruits/267.mp3",
+    "description": ""
+  },
+  {
+    "id": 268,
+    "name": "白萝卜",
+    "image": "assets/fruits/268.jpg",
+    "audio": "assets/fruits/268.mp3",
+    "description": ""
+  },
+  {
+    "id": 269,
+    "name": "豆角",
+    "image": "assets/fruits/269.jpg",
+    "audio": "assets/fruits/269.mp3",
+    "description": ""
+  },
+  {
+    "id": 270,
+    "name": "豌豆",
+    "image": "assets/fruits/270.jpg",
+    "audio": "assets/fruits/270.mp3",
+    "description": ""
+  },
+  {
+    "id": 271,
+    "name": "豇豆",
+    "image": "assets/fruits/271.jpg",
+    "audio": "assets/fruits/271.mp3",
+    "description": ""
+  },
+  {
+    "id": 272,
+    "name": "蘑菇",
+    "image": "assets/fruits/272.jpg",
+    "audio": "assets/fruits/272.mp3",
+    "description": ""
+  },
+  {
+    "id": 273,
+    "name": "莲藕",
+    "image": "assets/fruits/273.jpg",
+    "audio": "assets/fruits/273.mp3",
+    "description": ""
+  },
+  {
+    "id": 274,
+    "name": "山药",
+    "image": "assets/fruits/274.jpg",
+    "audio": "assets/fruits/274.mp3",
+    "description": ""
+  },
+  {
+    "id": 275,
+    "name": "红薯",
+    "image": "assets/fruits/275.jpg",
+    "audio": "assets/fruits/275.mp3",
+    "description": ""
+  },
+  {
+    "id": 276,
+    "name": "紫薯",
+    "image": "assets/fruits/276.jpg",
+    "audio": "assets/fruits/276.mp3",
+    "description": ""
+  },
+  {
+    "id": 277,
+    "name": "芋头",
+    "image": "assets/fruits/277.jpg",
+    "audio": "assets/fruits/277.mp3",
+    "description": ""
+  },
+  {
+    "id": 278,
+    "name": "韭菜",
+    "image": "assets/fruits/278.jpg",
+    "audio": "assets/fruits/278.mp3",
+    "description": ""
+  },
+  {
+    "id": 279,
+    "name": "生菜",
+    "image": "assets/fruits/279.jpg",
+    "audio": "assets/fruits/279.mp3",
+    "description": ""
+  },
+  {
+    "id": 280,
+    "name": "油麦菜",
+    "image": "assets/fruits/280.jpg",
+    "audio": "assets/fruits/280.mp3",
+    "description": ""
+  },
+  {
+    "id": 281,
+    "name": "莴笋",
+    "image": "assets/fruits/281.jpg",
+    "audio": "assets/fruits/281.mp3",
+    "description": ""
+  },
+  {
+    "id": 282,
+    "name": "芦笋",
+    "image": "assets/fruits/282.jpg",
+    "audio": "assets/fruits/282.mp3",
+    "description": ""
+  },
+  {
+    "id": 283,
+    "name": "茭白",
+    "image": "assets/fruits/283.jpg",
+    "audio": "assets/fruits/283.mp3",
+    "description": ""
+  },
+  {
+    "id": 284,
+    "name": "秋葵",
+    "image": "assets/fruits/284.jpg",
+    "audio": "assets/fruits/284.mp3",
+    "description": ""
+  },
+  {
+    "id": 285,
+    "name": "甜椒",
+    "image": "assets/fruits/285.jpg",
+    "audio": "assets/fruits/285.mp3",
+    "description": ""
+  },
+  {
+    "id": 286,
+    "name": "彩椒",
+    "image": "assets/fruits/286.jpg",
+    "audio": "assets/fruits/286.mp3",
+    "description": ""
+  },
+  {
+    "id": 287,
+    "name": "苦瓜",
+    "image": "assets/fruits/287.jpg",
+    "audio": "assets/fruits/287.mp3",
+    "description": ""
+  },
+  {
+    "id": 288,
+    "name": "丝瓜",
+    "image": "assets/fruits/288.jpg",
+    "audio": "assets/fruits/288.mp3",
+    "description": ""
+  },
+  {
+    "id": 289,
+    "name": "冬瓜",
+    "image": "assets/fruits/289.jpg",
+    "audio": "assets/fruits/289.mp3",
+    "description": ""
+  },
+  {
+    "id": 290,
+    "name": "空心菜",
+    "image": "assets/fruits/290.jpg",
+    "audio": "assets/fruits/290.mp3",
+    "description": ""
+  },
+  {
+    "id": 291,
+    "name": "芥菜",
+    "image": "assets/fruits/291.jpg",
+    "audio": "assets/fruits/291.mp3",
+    "description": ""
+  },
+  {
+    "id": 292,
+    "name": "蒜苔",
+    "image": "assets/fruits/292.jpg",
+    "audio": "assets/fruits/292.mp3",
+    "description": ""
+  },
+  {
+    "id": 293,
+    "name": "韭黄",
+    "image": "assets/fruits/293.jpg",
+    "audio": "assets/fruits/293.mp3",
+    "description": ""
+  },
+  {
+    "id": 294,
+    "name": "黄豆芽",
+    "image": "assets/fruits/294.jpg",
+    "audio": "assets/fruits/294.mp3",
+    "description": ""
+  },
+  {
+    "id": 295,
+    "name": "绿豆芽",
+    "image": "assets/fruits/295.jpg",
+    "audio": "assets/fruits/295.mp3",
+    "description": ""
+  },
+  {
+    "id": 296,
+    "name": "香菜",
+    "image": "assets/fruits/296.jpg",
+    "audio": "assets/fruits/296.mp3",
+    "description": ""
+  },
+  {
+    "id": 297,
+    "name": "小葱",
+    "image": "assets/fruits/297.jpg",
+    "audio": "assets/fruits/297.mp3",
+    "description": ""
+  },
+  {
+    "id": 298,
+    "name": "姜",
+    "image": "assets/fruits/298.jpg",
+    "audio": "assets/fruits/298.mp3",
+    "description": ""
+  },
+  {
+    "id": 299,
+    "name": "豌豆苗",
+    "image": "assets/fruits/299.jpg",
+    "audio": "assets/fruits/299.mp3",
+    "description": ""
+  }
+]
