@@ -16,6 +16,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont;
 }
 
+/* 返回按钮 */
 .back {
   position: fixed;
   top: 20px;
@@ -29,6 +30,7 @@ body {
   z-index: 10;
 }
 
+/* 卡片主体 */
 .card {
   width: 100vw;
   height: 100vh;
@@ -49,6 +51,35 @@ body {
   font-size: 48px;
   font-weight: bold;
 }
+
+/* 上一张 / 下一张按钮 */
+.nav {
+  position: fixed;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  border-radius: 50%;
+  z-index: 10;
+  user-select: none;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
+}
+
+.nav:active {
+  background: rgba(0,0,0,0.55);
+}
 </style>
 </head>
 
@@ -61,13 +92,24 @@ body {
   <div class="word" id="word"></div>
 </div>
 
+<div class="nav prev" onclick="prev()">◀</div>
+<div class="nav next" onclick="next()">▶</div>
+
 <audio id="audio"></audio>
 
 <script>
-
+// =====================
+// 注册 Service Worker（离线）
+// =====================
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
+
+// =====================
+// 读取 pack 并加载数据
+// =====================
+const pack = new URLSearchParams(location.search).get('pack');
+if (!pack) location.href = 'index.html';
 
 let cards = [];
 let index = 0;
@@ -76,65 +118,90 @@ const image = document.getElementById('image');
 const word  = document.getElementById('word');
 const audio = document.getElementById('audio');
 
-// 从 URL 读 pack
-const pack = new URLSearchParams(location.search).get('pack');
-
-// 加载图片包数据
 fetch(`data/${pack}.json`)
+  .then(res => res.json())
+  .then(data => {
+    cards = data;
+    show();
+  });
 
-
+// =====================
+// 显示当前卡片
+// =====================
 function show() {
   const item = cards[index];
   image.src = item.image;
   word.textContent = item.name;
   audio.src = item.audio;
   audio.play();
+
   preloadNext();
 }
 
-document.getElementById('card').onclick = () => audio.play();
+// =====================
+// 预加载下一张
+// =====================
+function preloadNext() {
+  const next = index + 1;
+  if (next >= cards.length) return;
+
+  const img = new Image();
+  img.src = cards[next].image;
+
+  const aud = new Audio();
+  aud.src = cards[next].audio;
+}
+
+// =====================
+// 操作函数
+// =====================
+function prev() {
+  if (index > 0) {
+    index--;
+    show();
+  }
+}
+
+function next() {
+  if (index < cards.length - 1) {
+    index++;
+    show();
+  }
+}
 
 function goBack() {
   location.href = 'index.html';
 }
 
-// 滑动
+// =====================
+// 点击播放
+// =====================
+document.getElementById('card').onclick = () => audio.play();
+
+// =====================
+// 滑动切换
+// =====================
 let startX = 0;
+
 document.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
 });
+
 document.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - startX;
-
-  if (dx > 50 && index > 0) {
-    index--;
-    show();
-  }
-
-  if (dx < -50 && index < cards.length - 1) {
-    index++;
-    show();
-  }
+  if (dx > 50) prev();
+  if (dx < -50) next();
 });
 
-function preloadNext() {
-  const nextIndex = index + 1;
-  if (nextIndex >= cards.length) return;
-
-  // 预加载图片
-  const img = new Image();
-  img.src = cards[nextIndex].image;
-
-  // 预加载音频
-  const aud = new Audio();
-  aud.src = cards[nextIndex].audio;
-}
-
-
+// =====================
+// 键盘支持（PC）
+// =====================
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') prev();
+  if (e.key === 'ArrowRight') next();
+  if (e.key === ' ') audio.play();
+});
 </script>
-
-
-
 
 </body>
 </html>
