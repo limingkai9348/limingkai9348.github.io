@@ -12,12 +12,19 @@
 <title>宝宝识物</title>
 
 <style>
-body {
+html, body {
   margin: 0;
-  background: #fff;
-  overflow-y: auto;
-  overflow-x: hidden;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
   font-family: -apple-system, BlinkMacSystemFont;
+}
+
+body {
+  background: #fff;
+  touch-action: pan-x;
 }
 
 /* 返回按钮 */
@@ -184,7 +191,7 @@ const description = document.getElementById('description');
 function show() {
   const item = cards[index];
   image.src = item.image;
-  word.textContent = item.name;
+  word.textContent = item.name + (item.name_english ? ' ' + item.name_english : '');
   audio.src = item.audio;
   
   // 显示描述文本
@@ -225,7 +232,6 @@ function prev() {
   if (index > 0) {
     index--;
     show();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
@@ -233,7 +239,6 @@ function next() {
   if (index < cards.length - 1) {
     index++;
     show();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
@@ -275,6 +280,23 @@ imageContainer.addEventListener('touchend', e => {
   
   isImageArea = false;
 });
+
+// =====================
+// 阻止页面上下滚动
+// =====================
+document.addEventListener('touchmove', e => {
+  // 如果不在描述文本区域内，阻止默认滚动行为
+  if (!e.target.closest('.description')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('wheel', e => {
+  // 如果不在描述文本区域内，阻止默认滚动行为
+  if (!e.target.closest('.description')) {
+    e.preventDefault();
+  }
+}, { passive: false });
 
 // =====================
 // 键盘支持（PC）
