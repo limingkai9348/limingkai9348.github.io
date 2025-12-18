@@ -4,349 +4,399 @@
     "name": "土豆",
     "image": "assets/vegetables/250.JPG",
     "audio": "assets/vegetables/250.mp3",
-    "description": ""
+    "description": "土豆长在土里，是植物的块茎，能给身体提供能量。",
+    "name_english": "Potato"
   },
   {
     "id": 251,
     "name": "番茄",
     "image": "assets/vegetables/251.JPG",
     "audio": "assets/vegetables/251.mp3",
-    "description": ""
+    "description": "番茄其实是果实，里面有籽，能生吃也能煮。",
+    "name_english": "Tomato"
   },
   {
     "id": 252,
     "name": "黄瓜",
     "image": "assets/vegetables/252.JPG",
     "audio": "assets/vegetables/252.mp3",
-    "description": ""
+    "description": "黄瓜水分很多，吃起来清爽，是夏天的蔬菜。",
+    "name_english": "Cucumber"
   },
   {
     "id": 253,
     "name": "胡萝卜",
     "image": "assets/vegetables/253.JPG",
     "audio": "assets/vegetables/253.mp3",
-    "description": ""
+    "description": "胡萝卜是植物的根，颜色橙橙的，对眼睛好。",
+    "name_english": "Carrot"
   },
   {
     "id": 254,
     "name": "白菜",
     "image": "assets/vegetables/254.JPG",
     "audio": "assets/vegetables/254.mp3",
-    "description": ""
+    "description": "白菜是一层一层长的叶子，是常见的蔬菜。",
+    "name_english": "Chinese Cabbage"
   },
   {
     "id": 255,
     "name": "青菜",
     "image": "assets/vegetables/255.JPG",
     "audio": "assets/vegetables/255.mp3",
-    "description": ""
+    "description": "青菜是绿色叶子菜，能帮助身体健康。",
+    "name_english": "Green Vegetable"
   },
   {
     "id": 256,
     "name": "菠菜",
     "image": "assets/vegetables/256.JPG",
     "audio": "assets/vegetables/256.mp3",
-    "description": ""
+    "description": "菠菜是绿叶蔬菜，煮熟后更容易吃。",
+    "name_english": "Spinach"
   },
   {
     "id": 257,
     "name": "玉米",
     "image": "assets/vegetables/257.JPG",
     "audio": "assets/vegetables/257.mp3",
-    "description": ""
+    "description": "玉米是一粒一粒的果实，长在玉米棒上。",
+    "name_english": "Corn"
   },
   {
     "id": 258,
     "name": "南瓜",
     "image": "assets/vegetables/258.JPG",
     "audio": "assets/vegetables/258.mp3",
-    "description": ""
+    "description": "南瓜个头大，成熟后果肉甜甜的。",
+    "name_english": "Pumpkin"
   },
   {
     "id": 259,
     "name": "西兰花",
     "image": "assets/vegetables/259.JPG",
     "audio": "assets/vegetables/259.mp3",
-    "description": ""
+    "description": "西兰花像一棵小树，是花还没开的样子。",
+    "name_english": "Broccoli"
   },
   {
     "id": 260,
     "name": "花椰菜",
     "image": "assets/vegetables/260.JPG",
     "audio": "assets/vegetables/260.mp3",
-    "description": ""
+    "description": "花椰菜是浅色的小花球，煮熟后吃。",
+    "name_english": "Cauliflower"
   },
   {
     "id": 261,
     "name": "茄子",
     "image": "assets/vegetables/261.JPG",
     "audio": "assets/vegetables/261.mp3",
-    "description": ""
+    "description": "茄子生的时候硬，煮熟后会变软。",
+    "name_english": "Eggplant"
   },
   {
     "id": 262,
     "name": "辣椒",
     "image": "assets/vegetables/262.JPG",
     "audio": "assets/vegetables/262.mp3",
-    "description": ""
+    "description": "辣椒味道辣，小朋友一般少吃。",
+    "name_english": "Chili Pepper"
   },
   {
     "id": 263,
     "name": "洋葱",
     "image": "assets/vegetables/263.JPG",
     "audio": "assets/vegetables/263.mp3",
-    "description": ""
+    "description": "洋葱一层一层的，切的时候容易流眼泪。",
+    "name_english": "Onion"
   },
   {
     "id": 264,
     "name": "大蒜",
     "image": "assets/vegetables/264.JPG",
     "audio": "assets/vegetables/264.mp3",
-    "description": ""
+    "description": "大蒜由一瓣一瓣组成，有特殊的气味。",
+    "name_english": "Garlic"
   },
   {
     "id": 265,
     "name": "大葱",
     "image": "assets/vegetables/265.JPG",
     "audio": "assets/vegetables/265.mp3",
-    "description": ""
+    "description": "大葱长得长长的，常用来做菜调味。",
+    "name_english": "Scallion"
   },
   {
     "id": 266,
     "name": "芹菜",
     "image": "assets/vegetables/266.JPG",
     "audio": "assets/vegetables/266.mp3",
-    "description": ""
+    "description": "芹菜的茎脆脆的，叶子也可以吃。",
+    "name_english": "Celery"
   },
   {
     "id": 267,
     "name": "萝卜",
     "image": "assets/vegetables/267.JPG",
     "audio": "assets/vegetables/267.mp3",
-    "description": ""
+    "description": "萝卜是长在土里的根，可以生吃或煮。",
+    "name_english": "Radish"
   },
   {
     "id": 268,
     "name": "白萝卜",
     "image": "assets/vegetables/268.JPG",
     "audio": "assets/vegetables/268.mp3",
-    "description": ""
+    "description": "白萝卜颜色白白的，水分很多。",
+    "name_english": "White Radish"
   },
   {
     "id": 269,
     "name": "豆角",
     "image": "assets/vegetables/269.JPG",
     "audio": "assets/vegetables/269.mp3",
-    "description": ""
+    "description": "豆角是豆类植物的果实，里面有豆子。",
+    "name_english": "Green Bean"
   },
   {
     "id": 270,
     "name": "豌豆",
     "image": "assets/vegetables/270.JPG",
     "audio": "assets/vegetables/270.mp3",
-    "description": ""
+    "description": "豌豆住在豆荚里，一颗一颗圆圆的。",
+    "name_english": "Pea"
   },
   {
     "id": 271,
     "name": "豇豆",
     "image": "assets/vegetables/271.JPG",
     "audio": "assets/vegetables/271.mp3",
-    "description": ""
+    "description": "豇豆长得细长，是一种豆类蔬菜。",
+    "name_english": "Cowpea"
   },
   {
     "id": 272,
     "name": "蘑菇",
     "image": "assets/vegetables/272.JPG",
     "audio": "assets/vegetables/272.mp3",
-    "description": ""
+    "description": "蘑菇不是植物，而是真菌。",
+    "name_english": "Mushroom"
   },
   {
     "id": 273,
     "name": "莲藕",
     "image": "assets/vegetables/273.JPG",
     "audio": "assets/vegetables/273.mp3",
-    "description": ""
+    "description": "莲藕长在水里，切开后有很多小洞。",
+    "name_english": "Lotus Root"
   },
   {
     "id": 274,
     "name": "山药",
     "image": "assets/vegetables/274.JPG",
     "audio": "assets/vegetables/274.mp3",
-    "description": ""
+    "description": "山药是长在土里的根，表面有点粗糙。",
+    "name_english": "Yam"
   },
   {
     "id": 275,
     "name": "红薯",
     "image": "assets/vegetables/275.JPG",
     "audio": "assets/vegetables/275.mp3",
-    "description": ""
+    "description": "红薯煮熟后很甜，是植物的根。",
+    "name_english": "Sweet Potato"
   },
   {
     "id": 276,
     "name": "紫薯",
     "image": "assets/vegetables/276.JPG",
     "audio": "assets/vegetables/276.mp3",
-    "description": ""
+    "description": "紫薯是红薯的一种，长在土里，紫色来自天然的颜色。",
+    "name_english": "Purple Sweet Potato"
   },
   {
     "id": 277,
     "name": "芋头",
     "image": "assets/vegetables/277.JPG",
     "audio": "assets/vegetables/277.mp3",
-    "description": ""
+    "description": "芋头长在土里，生的时候不能吃，要煮熟。",
+    "name_english": "Taro"
   },
   {
     "id": 278,
     "name": "韭菜",
     "image": "assets/vegetables/278.JPG",
     "audio": "assets/vegetables/278.mp3",
-    "description": ""
+    "description": "韭菜叶子细长，是一种有气味的叶子菜。",
+    "name_english": "Chinese Chive"
   },
   {
     "id": 279,
     "name": "生菜",
     "image": "assets/vegetables/279.JPG",
     "audio": "assets/vegetables/279.mp3",
-    "description": ""
+    "description": "生菜叶子脆脆的，常用来包菜或沙拉。",
+    "name_english": "Lettuce"
   },
   {
     "id": 280,
     "name": "油麦菜",
     "image": "assets/vegetables/280.JPG",
     "audio": "assets/vegetables/280.mp3",
-    "description": ""
+    "description": "油麦菜是深绿色的叶子菜，适合快炒。",
+    "name_english": "Arugula"
   },
   {
     "id": 281,
     "name": "莴笋",
     "image": "assets/vegetables/281.JPG",
     "audio": "assets/vegetables/281.mp3",
-    "description": ""
+    "description": "莴笋吃的是植物的茎，口感脆脆的。",
+    "name_english": "Lettuce Stem"
   },
   {
     "id": 282,
     "name": "芦笋",
     "image": "assets/vegetables/282.JPG",
     "audio": "assets/vegetables/282.mp3",
-    "description": ""
+    "description": "芦笋是植物长出来的嫩茎，像小竹笋。",
+    "name_english": "Asparagus"
   },
   {
     "id": 283,
     "name": "茭白",
     "image": "assets/vegetables/283.JPG",
     "audio": "assets/vegetables/283.mp3",
-    "description": ""
+    "description": "茭白长在水里，是水生植物的一部分。",
+    "name_english": "Water Bamboo"
   },
   {
     "id": 284,
     "name": "秋葵",
     "image": "assets/vegetables/284.JPG",
     "audio": "assets/vegetables/284.mp3",
-    "description": ""
+    "description": "秋葵切开后有小籽，摸起来会有点黏。",
+    "name_english": "Okra"
   },
   {
     "id": 285,
     "name": "甜椒",
     "image": "assets/vegetables/285.JPG",
     "audio": "assets/vegetables/285.mp3",
-    "description": ""
+    "description": "甜椒颜色亮，不辣，小朋友也可以吃。",
+    "name_english": "Bell Pepper"
   },
   {
     "id": 286,
     "name": "彩椒",
     "image": "assets/vegetables/286.JPG",
     "audio": "assets/vegetables/286.mp3",
-    "description": ""
+    "description": "彩椒有红黄绿多种颜色，看起来很漂亮。",
+    "name_english": "Colored Pepper"
   },
   {
     "id": 287,
     "name": "苦瓜",
     "image": "assets/vegetables/287.JPG",
     "audio": "assets/vegetables/287.mp3",
-    "description": ""
+    "description": "苦瓜味道苦，是一种有特别味道的瓜。",
+    "name_english": "Bitter Melon"
   },
   {
     "id": 288,
     "name": "丝瓜",
     "image": "assets/vegetables/288.JPG",
     "audio": "assets/vegetables/288.mp3",
-    "description": ""
+    "description": "丝瓜水分多，成熟前可以当蔬菜吃。",
+    "name_english": "Luffa"
   },
   {
     "id": 289,
     "name": "冬瓜",
     "image": "assets/vegetables/289.JPG",
     "audio": "assets/vegetables/289.mp3",
-    "description": ""
+    "description": "冬瓜个头大，里面水多，适合煮汤。",
+    "name_english": "Winter Melon"
   },
   {
     "id": 290,
     "name": "空心菜",
     "image": "assets/vegetables/290.JPG",
     "audio": "assets/vegetables/290.mp3",
-    "description": ""
+    "description": "空心菜的茎是空的，常长在水边。",
+    "name_english": "Water Spinach"
   },
   {
     "id": 291,
     "name": "芥菜",
     "image": "assets/vegetables/291.JPG",
     "audio": "assets/vegetables/291.mp3",
-    "description": ""
+    "description": "芥菜是一种叶子菜，味道稍微特别。",
+    "name_english": "Mustard Green"
   },
   {
     "id": 292,
     "name": "蒜苔",
     "image": "assets/vegetables/292.JPG",
     "audio": "assets/vegetables/292.mp3",
-    "description": ""
+    "description": "蒜苔是大蒜长出来的花茎。",
+    "name_english": "Garlic Scape"
   },
   {
     "id": 293,
     "name": "韭黄",
     "image": "assets/vegetables/293.JPG",
     "audio": "assets/vegetables/293.mp3",
-    "description": ""
+    "description": "韭黄是在没有阳光下长大的韭菜。",
+    "name_english": "Yellow Chive"
   },
   {
     "id": 294,
     "name": "黄豆芽",
     "image": "assets/vegetables/294.JPG",
     "audio": "assets/vegetables/294.mp3",
-    "description": ""
+    "description": "黄豆芽是黄豆吸水后长出的嫩芽。",
+    "name_english": "Soybean Sprout"
   },
   {
     "id": 295,
     "name": "绿豆芽",
     "image": "assets/vegetables/295.JPG",
     "audio": "assets/vegetables/295.mp3",
-    "description": ""
+    "description": "绿豆芽是绿豆发芽变成的蔬菜。",
+    "name_english": "Mung Bean Sprout"
   },
   {
     "id": 296,
     "name": "香菜",
     "image": "assets/vegetables/296.JPG",
     "audio": "assets/vegetables/296.mp3",
-    "description": ""
+    "description": "香菜气味明显，常放一点来提香。",
+    "name_english": "Cilantro"
   },
   {
     "id": 297,
     "name": "小葱",
     "image": "assets/vegetables/297.JPG",
     "audio": "assets/vegetables/297.mp3",
-    "description": ""
+    "description": "小葱细细长长，是常用的调味蔬菜。",
+    "name_english": "Green Onion"
   },
   {
     "id": 298,
     "name": "姜",
     "image": "assets/vegetables/298.JPG",
     "audio": "assets/vegetables/298.mp3",
-    "description": ""
+    "description": "姜长在土里，有辣味，常用来做菜。",
+    "name_english": "Ginger"
   },
   {
     "id": 299,
     "name": "豌豆苗",
     "image": "assets/vegetables/299.JPG",
     "audio": "assets/vegetables/299.mp3",
-    "description": ""
+    "description": "豌豆苗是豌豆长出来的小嫩叶。",
+    "name_english": "Pea Shoot"
   }
 ]
