@@ -2,6 +2,10 @@
 <html lang="zh">
 <head>
 <meta charset="utf-8">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="宝宝识物">
 <meta name="viewport"
   content="width=device-width,initial-scale=1.0,user-scalable=no">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -12,12 +16,17 @@
 <style>
 body {
   margin: 0;
-  background: #f7f7f7;
+  background: linear-gradient(135deg, #fff9e6 0%, #ffe8cc 100%);
   font-family: -apple-system, BlinkMacSystemFont;
+  min-height: 100vh;
 }
 h1 {
   text-align: center;
   padding: 16px 0;
+  color: #d97706;
+  font-size: 36px;
+  text-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+  margin: 20px 0;
 }
 .list {
   max-width: 100%;
@@ -29,22 +38,43 @@ h1 {
   justify-content: flex-start;
 }
 .item {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   padding: 16px 8px;
   font-size: 18px;
-  border-radius: 12px;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(255, 200, 150, 0.2);
   /* 3格布局：减去2个gap（8px * 2 = 16px）后平均分配 */
   flex: 0 0 calc((100% - 16px) / 3);
   min-width: 0;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
+  color: #d97706;
+  font-weight: 600;
+  border: 2px solid rgba(255, 182, 193, 0.1);
+  animation: fadeIn 0.4s ease-out;
+  animation-fill-mode: both;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 200, 150, 0.3);
+}
+
 .item:active {
-  transform: scale(0.95);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transform: scale(0.96);
 }
 
 /* iPad 上显示4个 */
@@ -57,6 +87,18 @@ h1 {
   }
 }
 
+/* 为列表项添加延迟动画 */
+.item:nth-child(1) { animation-delay: 0.05s; }
+.item:nth-child(2) { animation-delay: 0.1s; }
+.item:nth-child(3) { animation-delay: 0.15s; }
+.item:nth-child(4) { animation-delay: 0.2s; }
+.item:nth-child(5) { animation-delay: 0.25s; }
+.item:nth-child(6) { animation-delay: 0.3s; }
+.item:nth-child(7) { animation-delay: 0.35s; }
+.item:nth-child(8) { animation-delay: 0.4s; }
+.item:nth-child(9) { animation-delay: 0.45s; }
+.item:nth-child(n+10) { animation-delay: 0.5s; }
+
 /* 返回按钮 */
 .back {
   position: fixed;
@@ -65,10 +107,17 @@ h1 {
   padding: 10px 16px;
   font-size: 20px;
   font-weight: bold;
-  background: rgba(255,255,255,0.85);
+  background: linear-gradient(135deg, #ffd89b 0%, #ffb347 100%);
+  color: #fff;
   border-radius: 999px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.3);
   z-index: 10;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back:active {
+  transform: scale(0.95);
 }
 
 </style>
