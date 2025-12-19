@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta
+  name="viewport"
+  content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>MP3循环播放</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  font-family: -apple-system, BlinkMacSystemFont;
+}
+
+body {
+  background: #f5f5f5;
+  touch-action: pan-x;
+}
+
+/* 返回按钮 */
+.back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  font-size: 20px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.85);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+/* 卡片主体 */
+.card {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* 图片容器 - 1:1比例，100%宽度 */
+.image-container {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* iPad和宽屏设备适配 */
+@media (min-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+  
+  .image-container {
+    width: 100%;
+  }
+  
+  .word {
+    width: 100%;
+  }
+  
+  .description {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 标题 */
+.word {
+  margin-top: 24px;
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+/* 描述文本 */
+.description {
+  margin-top: 16px;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #666;
+  text-align: center;
+  max-width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 描述文本滚动条样式 */
+.description::-webkit-scrollbar {
+  width: 4px;
+}
+
+.description::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.description::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 2px;
+}
+
+/* 上一张 / 下一张按钮 */
+.nav {
+  position: fixed;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  border-radius: 50%;
+  z-index: 10;
+  user-select: none;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
+}
+
+/* iPad和宽屏设备上，按钮相对于内容区域居中 */
+@media (min-width: 768px) {
+  .prev {
+    left: calc(50% - 300px + 20px);
+  }
+  
+  .next {
+    right: calc(50% - 300px + 20px);
+  }
+  
+  .back {
+    left: calc(50% - 300px + 20px);
+  }
+}
+
+.nav:active {
+  background: rgba(0,0,0,0.55);
+}
+</style>
+</head>
+
+<body>
+
+<div class="back" onclick="goBack()">← 返回</div>
+
+<div class="card" id="card">
+  <div class="image-container">
+    <img id="image">
+  </div>
+  <div class="word" id="word"></div>
+  <div class="description" id="description"></div>
+</div>
+
+<div class="nav prev" onclick="prev()">◀</div>
+<div class="nav next" onclick="next()">▶</div>
+
+<audio id="audio"></audio>
+
+<script>
+// =====================
+// 注册 Service Worker（离线）
+// =====================
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
+// =====================
+// 读取 pack 并加载数据
+// =====================
+const pack = new URLSearchParams(location.search).get('pack');
+if (!pack) location.href = 'index.html';
+
+let cards = [];
+const startIndex =
+  parseInt(new URLSearchParams(location.search).get('index')) || 0;
+let index = startIndex;
+
+const image = document.getElementById('image');
+const word  = document.getElementById('word');
+const audio = document.getElementById('audio');
+
+// 设置音频循环播放
+audio.loop = true;
+
+fetch(`data/${pack}.json`)
+  .then(res => res.json())
+  .then(data => {
+    cards = data;
+    show();
+  });
+
+// =====================
+// 文件路径大小写兼容处理
+// =====================
+function getCaseVariants(path) {
+  // 获取文件扩展名的大小写变体
+  const variants = [path]; // 原始路径
+  const extMatch = path.match(/\.([^.]+)$/);
+  if (extMatch) {
+    const ext = extMatch[1];
+    const basePath = path.substring(0, path.length - ext.length - 1);
+    // 添加小写、大写、首字母大写变体
+    if (ext.toLowerCase() !== ext) {
+      variants.push(basePath + '.' + ext.toLowerCase());
+    }
+    if (ext.toUpperCase() !== ext) {
+      variants.push(basePath + '.' + ext.toUpperCase());
+    }
+    if (ext.length > 0) {
+      const capitalized = ext.charAt(0).toUpperCase() + ext.slice(1).toLowerCase();
+      if (capitalized !== ext) {
+        variants.push(basePath + '.' + capitalized);
+      }
+    }
+  }
+  return [...new Set(variants)]; // 去重
+}
+
+// 尝试加载资源，支持大小写兼容
+function loadResourceWithFallback(element, path, isImage = false) {
+  const variants = getCaseVariants(path);
+  let currentIndex = 0;
+  
+  function tryNext() {
+    if (currentIndex >= variants.length) {
+      console.error(`无法加载资源: ${path} (已尝试所有大小写变体)`);
+      return;
+    }
+    
+    const currentPath = variants[currentIndex];
+    
+    if (isImage) {
+      // 图片：直接设置src，通过onerror处理失败
+      const originalOnError = element.onerror;
+      element.onerror = () => {
+        currentIndex++;
+        tryNext();
+      };
+      element.onload = () => {
+        element.onerror = originalOnError; // 恢复原始错误处理
+      };
+      element.src = currentPath;
+    } else {
+      // 音频：直接设置src，通过error事件处理失败
+      const originalOnError = element.onerror;
+      element.onerror = () => {
+        currentIndex++;
+        tryNext();
+      };
+      element.onloadeddata = () => {
+        element.onerror = originalOnError; // 恢复原始错误处理
+      };
+      element.src = currentPath;
+    }
+  }
+  
+  tryNext();
+}
+
+// =====================
+// 显示当前卡片
+// =====================
+const description = document.getElementById('description');
+
+function show() {
+  const item = cards[index];
+  // 使用大小写兼容的方式加载图片和音频
+  loadResourceWithFallback(image, item.image, true);
+  loadResourceWithFallback(audio, item.audio, false);
+  word.textContent = item.name + (item.name_english ? ' ' + item.name_english : '');
+  
+  // 显示描述文本
+  if (item.description) {
+    description.textContent = item.description;
+    description.style.display = 'block';
+    // 如果超过100字，确保可以滚动
+    if (item.description.length > 100) {
+      description.style.maxHeight = '120px';
+    } else {
+      description.style.maxHeight = 'none';
+    }
+  } else {
+    description.style.display = 'none';
+  }
+
+  // 停止当前播放的音频（如果正在播放）
+  audio.pause();
+  audio.currentTime = 0;
+  // 确保循环播放已启用
+  audio.loop = true;
+
+  preloadNext();
+}
+
+// =====================
+// 预加载下一张
+// =====================
+function preloadNext() {
+  const next = index + 1;
+  if (next >= cards.length) return;
+
+  const img = new Image();
+  loadResourceWithFallback(img, cards[next].image, true);
+
+  const aud = new Audio();
+  loadResourceWithFallback(aud, cards[next].audio, false);
+}
+
+// =====================
+// 操作函数
+// =====================
+function prev() {
+  if (index > 0) {
+    index--;
+    show();
+  }
+}
+
+function next() {
+  if (index < cards.length - 1) {
+    index++;
+    show();
+  }
+}
+
+function goBack() {
+  location.href = 'music-list.html?pack=' + pack;
+}
+
+// =====================
+// 播放音频函数（带错误处理，循环播放）
+// =====================
+function playAudio() {
+  if (audio.src) {
+    // 确保循环播放已启用
+    audio.loop = true;
+    audio.play().catch(err => {
+      console.error('播放音频失败:', err);
+    });
+  }
+}
+
+// =====================
+// 点击播放（只点击图片区域时播放）
+// =====================
+document.querySelector('.image-container').onclick = () => playAudio();
+
+// =====================
+// 滑动切换（只在图片区域）
+// =====================
+let startX = 0;
+let startY = 0;
+let isImageArea = false;
+let hasMoved = false;
+
+const imageContainer = document.querySelector('.image-container');
+
+imageContainer.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  isImageArea = true;
+  hasMoved = false;
+});
+
+imageContainer.addEventListener('touchmove', e => {
+  if (!isImageArea) return;
+  hasMoved = true;
+});
+
+imageContainer.addEventListener('touchend', e => {
+  if (!isImageArea) return;
+  
+  const dx = e.changedTouches[0].clientX - startX;
+  const dy = Math.abs(e.changedTouches[0].clientY - startY);
+  
+  // 只有水平滑动距离大于垂直滑动距离，且超过50px时才切换
+  if (hasMoved && Math.abs(dx) > dy && Math.abs(dx) > 50) {
+    if (dx > 50) prev();
+    if (dx < -50) next();
+  } else if (!hasMoved) {
+    // 如果没有滑动，则播放音频
+    playAudio();
+  }
+  
+  isImageArea = false;
+  hasMoved = false;
+});
+
+// =====================
+// 阻止页面上下滚动
+// =====================
+document.addEventListener('touchmove', e => {
+  // 如果不在描述文本区域内，阻止默认滚动行为
+  if (!e.target.closest('.description')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('wheel', e => {
+  // 如果不在描述文本区域内，阻止默认滚动行为
+  if (!e.target.closest('.description')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// =====================
+// 键盘支持（PC）
+// =====================
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') prev();
+  if (e.key === 'ArrowRight') next();
+  if (e.key === ' ') playAudio();
+});
+</script>
+
+</body>
+</html>
+

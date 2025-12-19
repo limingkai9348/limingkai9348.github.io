@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>选择音乐</title>
+
+<style>
+body {
+  margin: 0;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont;
+}
+h1 {
+  text-align: center;
+  padding: 16px 0;
+}
+.list {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+}
+.item {
+  background: #fff;
+  padding: 16px 8px;
+  font-size: 18px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  /* 3格布局：减去2个gap（8px * 2 = 16px）后平均分配 */
+  flex: 0 0 calc((100% - 16px) / 3);
+  min-width: 0;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.item:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* iPad 上显示4个 */
+@media (min-width: 768px) {
+  .item {
+    /* 4格布局：减去3个gap（8px * 3 = 24px）后平均分配 */
+    flex: 0 0 calc((100% - 24px) / 4);
+    font-size: 20px;
+    padding: 18px 8px;
+  }
+}
+
+/* 返回按钮 */
+.back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  font-size: 20px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.85);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 id="title">请选择</h1>
+<div class="back" onclick="goBack()">← 返回</div>
+<div class="list" id="list"></div>
+
+<script>
+
+function goBack() {
+  location.href = 'index.html';
+}
+
+const pack = new URLSearchParams(location.search).get('pack');
+if (!pack) location.href = 'index.html';
+
+fetch(`data/${pack}.json`)
+  .then(r => r.json())
+  .then(cards => {
+    const list = document.getElementById('list');
+    cards.forEach((c, i) => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.textContent = c.name;
+      div.onclick = () => {
+        location.href = `music-play.html?pack=${pack}&index=${i}`;
+      };
+      list.appendChild(div);
+    });
+  });
+</script>
+
+</body>
+</html>
+
