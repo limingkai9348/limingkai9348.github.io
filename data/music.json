@@ -11,8 +11,8 @@
     "id": 2001,
     "name": "好妈妈",
     "image": "assets/music/2001.JPG",
-    "audio": "https://96f.1ting.com/local_to_cube_202004121813/96kmp3/2019/07/13X/13c_Qianwen/01.mp3",
-    "description": "我有一个好妈妈",
+    "audio": "assets/music/2001.mp3",
+    "description": "我有一个好妈妈，她是这个世界上最好的妈妈",
     "name_english": ""
   }
 ]
