@@ -109,6 +109,26 @@ h1 {
   color: #999;
   text-align: center;
 }
+.force-update-option {
+  margin: 12px 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.force-update-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.force-update-option label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
 </style>
 </head>
 
@@ -123,6 +143,10 @@ h1 {
   <div class="cache-switch">
     <span class="switch-label">缓存优先模式</span>
     <div class="switch" id="cacheSwitch"></div>
+  </div>
+  <div class="force-update-option">
+    <input type="checkbox" id="forceUpdateCheckbox">
+    <label for="forceUpdateCheckbox">强制更新（即使已缓存也重新下载）</label>
   </div>
   <button class="cache-button" id="cacheButton">手动缓存所有资源</button>
   <div class="cache-progress" id="cacheProgress"></div>
@@ -177,6 +201,9 @@ cacheButton.onclick = async () => {
   cacheProgress.textContent = '正在收集资源列表...';
   cacheStatus.textContent = '';
   
+  // 获取是否强制更新
+  const forceUpdate = document.getElementById('forceUpdateCheckbox').checked;
+  
   try {
     // 收集所有资源
     const packsResponse = await fetch('data/packs.json');
@@ -207,8 +234,15 @@ cacheButton.onclick = async () => {
             cacheStatus.textContent = `当前: ${url.split('/').pop()}`;
           }
         } else if (data.type === 'cacheComplete') {
-          const { success, failed, total } = data;
-          cacheProgress.textContent = `缓存完成！成功: ${success}, 失败: ${failed}, 总计: ${total}`;
+          const { success, failed, skipped = 0, updated = 0, total } = data;
+          let message = `缓存完成！成功: ${success}, 失败: ${failed}, 总计: ${total}`;
+          if (skipped > 0) {
+            message += ` (已跳过已缓存: ${skipped})`;
+          }
+          if (updated > 0) {
+            message += ` (已更新: ${updated})`;
+          }
+          cacheProgress.textContent = message;
           cacheStatus.textContent = '';
           cacheButton.disabled = false;
           navigator.serviceWorker.removeEventListener('message', messageHandler);
@@ -225,7 +259,8 @@ cacheButton.onclick = async () => {
       // 发送缓存请求
       serviceWorkerRegistration.active.postMessage({
         type: 'cacheResources',
-        resources: resourceList
+        resources: resourceList,
+        forceUpdate: forceUpdate  // 添加强制更新标志
       });
     } else {
       cacheProgress.textContent = 'Service Worker 未就绪，请刷新页面后重试';

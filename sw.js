@@ -45,6 +45,7 @@ self.addEventListener('message', async event => {
   } else if (event.data.type === 'cacheResources') {
     // 手动缓存资源
     const resources = event.data.resources || [];
+    const forceUpdate = event.data.forceUpdate || false;  // 获取强制更新标志
     // 获取发送消息的客户端
     let clientId = null;
     if (event.source && event.source.id) {
@@ -56,7 +57,7 @@ self.addEventListener('message', async event => {
         clientId = clients[0].id;
       }
     }
-    cacheResources(resources, clientId);
+    cacheResources(resources, clientId, forceUpdate);
   }
 });
 
@@ -116,12 +117,29 @@ async function fetchResourceWithCaseFallback(url) {
   throw new Error(`无法找到资源: ${fullUrl} (已尝试所有大小写变体)`);
 }
 
+// 检查资源是否已缓存（支持大小写兼容）
+async function isResourceCached(cache, url) {
+  const cacheUrl = url.startsWith('/') ? url : '/' + url;
+  const variants = getCaseVariants(cacheUrl);
+  
+  // 检查所有大小写变体
+  for (const variant of variants) {
+    const cached = await cache.match(variant);
+    if (cached) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // 手动缓存资源函数
-async function cacheResources(resources, clientId) {
+async function cacheResources(resources, clientId, forceUpdate = false) {
   const cache = await caches.open(CACHE_NAME);
   const total = resources.length;
   let success = 0;
   let failed = 0;
+  let skipped = 0; // 已缓存的数量
+  let updated = 0; // 强制更新的数量
   
   // 批量缓存资源（避免一次性请求过多）
   const batchSize = 10;
@@ -129,12 +147,24 @@ async function cacheResources(resources, clientId) {
     const batch = resources.slice(i, i + batchSize);
     const results = await Promise.allSettled(
       batch.map(async url => {
+        const cacheUrl = url.startsWith('/') ? url : '/' + url;
+        
+        // 如果强制更新，跳过缓存检查
+        const wasCached = await isResourceCached(cache, url);
+        if (!forceUpdate && wasCached) {
+          return { skipped: true, updated: false, url: cacheUrl };
+        }
+        
         try {
           // 使用大小写兼容的方式获取资源
           const { response, actualUrl } = await fetchResourceWithCaseFallback(url);
           // 使用原始URL作为缓存键，保持一致性
-          const cacheUrl = url.startsWith('/') ? url : '/' + url;
-          return cache.put(cacheUrl, response);
+          await cache.put(cacheUrl, response);
+          return { 
+            skipped: false, 
+            updated: forceUpdate && wasCached,  // 如果是强制更新且之前已缓存，则标记为已更新
+            url: cacheUrl 
+          };
         } catch (error) {
           throw error;
         }
@@ -147,7 +177,14 @@ async function cacheResources(resources, clientId) {
       const fullUrl = url.startsWith('/') ? url : '/' + url;
       
       if (result.status === 'fulfilled') {
-        success++;
+        if (result.value.skipped) {
+          skipped++;
+        } else {
+          success++;
+          if (result.value.updated) {
+            updated++;
+          }
+        }
       } else {
         failed++;
         console.warn(`缓存失败: ${fullUrl}`, result.reason);
@@ -156,7 +193,7 @@ async function cacheResources(resources, clientId) {
       // 发送进度更新
       sendToClient(clientId, {
         type: 'cacheProgress',
-        current: success + failed,
+        current: success + failed + skipped,
         total: total,
         url: fullUrl
       });
@@ -168,10 +205,12 @@ async function cacheResources(resources, clientId) {
     type: 'cacheComplete',
     success: success,
     failed: failed,
+    skipped: skipped,
+    updated: updated,
     total: total
   });
   
-  console.log(`缓存完成: 成功 ${success}, 失败 ${failed}, 总计 ${total}`);
+  console.log(`缓存完成: 成功 ${success}, 失败 ${failed}, 已跳过 ${skipped}, 已更新 ${updated}, 总计 ${total}`);
 }
 
 // 获取文件路径的大小写变体
