@@ -1,0 +1,162 @@
+[
+  {
+    "id": 300,
+    "name": "小猫",
+    "image": "assets/animals-1/300.JPG",
+    "audio": "assets/animals-1/300.mp3",
+    "description": "小猫是一种温顺可爱的家庭宠物。",
+    "name_english": "Cat"
+  },
+  {
+    "id": 301,
+    "name": "小狗",
+    "image": "assets/animals-1/301.JPG",
+    "audio": "assets/animals-1/301.mp3",
+    "description": "小狗是人类忠诚的朋友。",
+    "name_english": "Dog"
+  },
+  {
+    "id": 302,
+    "name": "小鸟",
+    "image": "assets/animals-1/302.JPG",
+    "audio": "assets/animals-1/302.mp3",
+    "description": "小鸟会飞，常常生活在树上。",
+    "name_english": "Bird"
+  },
+  {
+    "id": 303,
+    "name": "鸭子",
+    "image": "assets/animals-1/303.JPG",
+    "audio": "assets/animals-1/303.mp3",
+    "description": "鸭子喜欢在水里游泳。",
+    "name_english": "Duck"
+  },
+  {
+    "id": 304,
+    "name": "小鸡",
+    "image": "assets/animals-1/304.JPG",
+    "audio": "assets/animals-1/304.mp3",
+    "description": "鸡是一种常见的家禽。",
+    "name_english": "Chicken"
+  },
+  {
+    "id": 305,
+    "name": "小牛",
+    "image": "assets/animals-1/305.JPG",
+    "audio": "assets/animals-1/305.mp3",
+    "description": "牛是一种大型的农场动物。",
+    "name_english": "Cow"
+  },
+  {
+    "id": 306,
+    "name": "小马",
+    "image": "assets/animals-1/306.JPG",
+    "audio": "assets/animals-1/306.mp3",
+    "description": "马跑得很快，可以供人骑乘。",
+    "name_english": "Horse"
+  },
+  {
+    "id": 307,
+    "name": "小猪",
+    "image": "assets/animals-1/307.JPG",
+    "audio": "assets/animals-1/307.mp3",
+    "description": "猪是一种常见的家畜。",
+    "name_english": "Pig"
+  },
+  {
+    "id": 308,
+    "name": "小羊",
+    "image": "assets/animals-1/308.JPG",
+    "audio": "assets/animals-1/308.mp3",
+    "description": "羊身上长着厚厚的羊毛。",
+    "name_english": "Sheep"
+  },
+  {
+    "id": 309,
+    "name": "兔子",
+    "image": "assets/animals-1/309.JPG",
+    "audio": "assets/animals-1/309.mp3",
+    "description": "兔子有长耳朵，喜欢吃胡萝卜。",
+    "name_english": "Rabbit"
+  },
+  {
+    "id": 310,
+    "name": "大象",
+    "image": "assets/animals-1/310.JPG",
+    "audio": "assets/animals-1/310.mp3",
+    "description": "大象是体型很大的动物。",
+    "name_english": "Elephant"
+  },
+  {
+    "id": 311,
+    "name": "狮子",
+    "image": "assets/animals-1/311.JPG",
+    "audio": "assets/animals-1/311.mp3",
+    "description": "狮子被称为草原之王。",
+    "name_english": "Lion"
+  },
+  {
+    "id": 312,
+    "name": "老虎",
+    "image": "assets/animals-1/312.JPG",
+    "audio": "assets/animals-1/312.mp3",
+    "description": "老虎身上有黑色的条纹。",
+    "name_english": "Tiger"
+  },
+  {
+    "id": 313,
+    "name": "猴子",
+    "image": "assets/animals-1/313.JPG",
+    "audio": "assets/animals-1/313.mp3",
+    "description": "猴子聪明又灵活。",
+    "name_english": "Monkey"
+  },
+  {
+    "id": 314,
+    "name": "小熊",
+    "image": "assets/animals-1/314.JPG",
+    "audio": "assets/animals-1/314.mp3",
+    "description": "熊是一种力气很大的动物。",
+    "name_english": "Bear"
+  },
+  {
+    "id": 315,
+    "name": "小鹿",
+    "image": "assets/animals-1/315.JPG",
+    "audio": "assets/animals-1/315.mp3",
+    "description": "鹿有细长的腿，跑得很快。",
+    "name_english": "Deer"
+  },
+  {
+    "id": 316,
+    "name": "长颈鹿",
+    "image": "assets/animals-1/316.JPG",
+    "audio": "assets/animals-1/316.mp3",
+    "description": "长颈鹿的脖子很长。",
+    "name_english": "Giraffe"
+  },
+  {
+    "id": 317,
+    "name": "斑马",
+    "image": "assets/animals-1/317.JPG",
+    "audio": "assets/animals-1/317.mp3",
+    "description": "斑马身上有黑白相间的条纹。",
+    "name_english": "Zebra"
+  },
+  {
+    "id": 318,
+    "name": "青蛙",
+    "image": "assets/animals-1/318.JPG",
+    "audio": "assets/animals-1/318.mp3",
+    "description": "青蛙生活在水边，会跳跃。",
+    "name_english": "Frog"
+  },
+  {
+    "id": 319,
+    "name": "小鱼",
+    "image": "assets/animals-1/319.JPG",
+    "audio": "assets/animals-1/319.mp3",
+    "description": "鱼生活在水中，用鳃呼吸。",
+    "name_english": "Fish"
+  }
+]
