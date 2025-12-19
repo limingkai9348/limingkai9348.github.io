@@ -28,15 +28,233 @@ h1 {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+.cache-control {
+  background: #fff;
+  margin: 12px 16px;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.cache-control h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: normal;
+}
+.cache-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+.switch-label {
+  font-size: 16px;
+  color: #333;
+}
+.switch {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  background: #ccc;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.switch.active {
+  background: #4CAF50;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.switch.active::after {
+  left: 24px;
+}
+.cache-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.cache-button:hover {
+  background: #1976D2;
+}
+.cache-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.cache-progress {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+.cache-status {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
 </style>
 </head>
 
 <body>
 
 <h1>选择图包</h1>
+
+<div class="cache-control">
+  <h2>缓存设置</h2>
+  <div class="cache-switch">
+    <span class="switch-label">缓存优先模式</span>
+    <div class="switch" id="cacheSwitch"></div>
+  </div>
+  <button class="cache-button" id="cacheButton">手动缓存所有资源</button>
+  <div class="cache-progress" id="cacheProgress"></div>
+  <div class="cache-status" id="cacheStatus"></div>
+</div>
+
 <div id="list"></div>
 
 <script>
+// 注册 Service Worker（缓存功能）
+let serviceWorkerRegistration = null;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    serviceWorkerRegistration = reg;
+    updateCacheStatus();
+  });
+}
+
+// 缓存控制相关元素
+const cacheSwitch = document.getElementById('cacheSwitch');
+const cacheButton = document.getElementById('cacheButton');
+const cacheProgress = document.getElementById('cacheProgress');
+const cacheStatus = document.getElementById('cacheStatus');
+
+// 加载缓存优先开关状态
+const cacheFirstMode = localStorage.getItem('cacheFirstMode') === 'true';
+if (cacheFirstMode) {
+  cacheSwitch.classList.add('active');
+}
+
+// 切换缓存优先模式
+cacheSwitch.onclick = () => {
+  const isActive = cacheSwitch.classList.toggle('active');
+  localStorage.setItem('cacheFirstMode', isActive);
+  
+  // 通知 Service Worker 更新策略
+  if (serviceWorkerRegistration && serviceWorkerRegistration.active) {
+    serviceWorkerRegistration.active.postMessage({
+      type: 'updateCacheStrategy',
+      cacheFirst: isActive
+    });
+  }
+  
+  updateCacheStatus();
+};
+
+// 手动缓存所有资源
+cacheButton.onclick = async () => {
+  if (cacheButton.disabled) return;
+  
+  cacheButton.disabled = true;
+  cacheProgress.textContent = '正在收集资源列表...';
+  cacheStatus.textContent = '';
+  
+  try {
+    // 收集所有资源
+    const packsResponse = await fetch('data/packs.json');
+    const packs = await packsResponse.json();
+    const resources = new Set();
+    
+    for (const pack of packs) {
+      const packResponse = await fetch(`data/${pack.id}.json`);
+      const cards = await packResponse.json();
+      cards.forEach(card => {
+        if (card.image) resources.add(card.image);
+        if (card.audio) resources.add(card.audio);
+      });
+    }
+    
+    const resourceList = Array.from(resources);
+    cacheProgress.textContent = `找到 ${resourceList.length} 个资源，开始缓存...`;
+    
+    // 发送缓存请求到 Service Worker
+    if (serviceWorkerRegistration && serviceWorkerRegistration.active) {
+      // 监听 Service Worker 的响应
+      const messageHandler = (event) => {
+        const data = event.data;
+        if (data.type === 'cacheProgress') {
+          const { current, total, url } = data;
+          cacheProgress.textContent = `正在缓存: ${current}/${total} (${Math.round(current/total*100)}%)`;
+          if (url) {
+            cacheStatus.textContent = `当前: ${url.split('/').pop()}`;
+          }
+        } else if (data.type === 'cacheComplete') {
+          const { success, failed, total } = data;
+          cacheProgress.textContent = `缓存完成！成功: ${success}, 失败: ${failed}, 总计: ${total}`;
+          cacheStatus.textContent = '';
+          cacheButton.disabled = false;
+          navigator.serviceWorker.removeEventListener('message', messageHandler);
+          updateCacheStatus();
+        } else if (data.type === 'cacheError') {
+          cacheProgress.textContent = `缓存出错: ${data.error}`;
+          cacheButton.disabled = false;
+          navigator.serviceWorker.removeEventListener('message', messageHandler);
+        }
+      };
+      
+      navigator.serviceWorker.addEventListener('message', messageHandler);
+      
+      // 发送缓存请求
+      serviceWorkerRegistration.active.postMessage({
+        type: 'cacheResources',
+        resources: resourceList
+      });
+    } else {
+      cacheProgress.textContent = 'Service Worker 未就绪，请刷新页面后重试';
+      cacheButton.disabled = false;
+    }
+  } catch (error) {
+    cacheProgress.textContent = `错误: ${error.message}`;
+    cacheButton.disabled = false;
+  }
+};
+
+// 更新缓存状态显示
+async function updateCacheStatus() {
+  if (!('caches' in window)) {
+    cacheStatus.textContent = '浏览器不支持缓存';
+    return;
+  }
+  
+  try {
+    const cache = await caches.open('baby-cards-v6');
+    const keys = await cache.keys();
+    const imageCount = keys.filter(k => k.url.match(/\.(jpg|jpeg|png|gif|webp)$/i)).length;
+    const audioCount = keys.filter(k => k.url.match(/\.mp3$/i)).length;
+    const mode = cacheSwitch.classList.contains('active') ? '缓存优先' : '网络优先';
+    cacheStatus.textContent = `已缓存: ${imageCount} 图片, ${audioCount} 音频 | 模式: ${mode}`;
+  } catch (error) {
+    cacheStatus.textContent = '无法读取缓存状态';
+  }
+}
+
+// 加载图包列表
 fetch('data/packs.json')
   .then(r => r.json())
   .then(packs => {
@@ -51,6 +269,9 @@ fetch('data/packs.json')
       root.appendChild(div);
     });
   });
+
+// 定期更新缓存状态
+setInterval(updateCacheStatus, 5000);
 </script>
 
 </body>
