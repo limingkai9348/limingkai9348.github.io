@@ -1,0 +1,82 @@
+[
+  {
+    "id": 320,
+    "name": "汽车",
+    "image": "assets/transportation/320.JPG",
+    "audio": "assets/transportation/320.mp3",
+    "description": "汽车在马路上行驶，方便出行。",
+    "name_english": "Car"
+  },
+  {
+    "id": 321,
+    "name": "公交车",
+    "image": "assets/transportation/321.JPG",
+    "audio": "assets/transportation/321.mp3",
+    "description": "公交车可以载很多乘客。",
+    "name_english": "Bus"
+  },
+  {
+    "id": 322,
+    "name": "自行车",
+    "image": "assets/transportation/322.JPG",
+    "audio": "assets/transportation/322.mp3",
+    "description": "自行车需要用脚踩着骑。",
+    "name_english": "Bicycle"
+  },
+  {
+    "id": 323,
+    "name": "摩托车",
+    "image": "assets/transportation/323.JPG",
+    "audio": "assets/transportation/323.mp3",
+    "description": "摩托车跑得快，声音很响。",
+    "name_english": "Motorcycle"
+  },
+  {
+    "id": 324,
+    "name": "卡车",
+    "image": "assets/transportation/324.JPG",
+    "audio": "assets/transportation/324.mp3",
+    "description": "卡车用来运送很多货物。",
+    "name_english": "Truck"
+  },
+  {
+    "id": 325,
+    "name": "火车",
+    "image": "assets/transportation/325.JPG",
+    "audio": "assets/transportation/325.mp3",
+    "description": "火车在铁轨上行驶。",
+    "name_english": "Train"
+  },
+  {
+    "id": 326,
+    "name": "飞机",
+    "image": "assets/transportation/326.JPG",
+    "audio": "assets/transportation/326.mp3",
+    "description": "飞机在天空中快速飞行。",
+    "name_english": "Airplane"
+  },
+  {
+    "id": 327,
+    "name": "轮船",
+    "image": "assets/transportation/327.JPG",
+    "audio": "assets/transportation/327.mp3",
+    "description": "轮船在水面上航行。",
+    "name_english": "Ship"
+  },
+  {
+    "id": 328,
+    "name": "挖掘机",
+    "image": "assets/transportation/328.JPG",
+    "audio": "assets/transportation/328.mp3",
+    "description": "挖掘机用来挖土施工。",
+    "name_english": "Excavator"
+  },
+  {
+    "id": 329,
+    "name": "警车",
+    "image": "assets/transportation/329.JPG",
+    "audio": "assets/transportation/329.mp3",
+    "description": "警车用于巡逻和帮助别人。",
+    "name_english": "Police Car"
+  }
+]
