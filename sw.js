@@ -130,6 +130,69 @@ async function cacheResources(resources, clientId) {
   console.log(`缓存完成: 成功 ${success}, 失败 ${failed}, 总计 ${total}`);
 }
 
+// 获取文件路径的大小写变体
+function getCaseVariants(path) {
+  const variants = [path]; // 原始路径
+  const extMatch = path.match(/\.([^.]+)$/);
+  if (extMatch) {
+    const ext = extMatch[1];
+    const basePath = path.substring(0, path.length - ext.length - 1);
+    // 添加小写、大写、首字母大写变体
+    if (ext.toLowerCase() !== ext) {
+      variants.push(basePath + '.' + ext.toLowerCase());
+    }
+    if (ext.toUpperCase() !== ext) {
+      variants.push(basePath + '.' + ext.toUpperCase());
+    }
+    if (ext.length > 0) {
+      const capitalized = ext.charAt(0).toUpperCase() + ext.slice(1).toLowerCase();
+      if (capitalized !== ext) {
+        variants.push(basePath + '.' + capitalized);
+      }
+    }
+  }
+  return [...new Set(variants)]; // 去重
+}
+
+// 尝试从缓存或网络获取资源（支持大小写兼容）
+async function fetchWithCaseFallback(request) {
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+  const variants = getCaseVariants(pathname);
+  
+  // 先尝试从缓存查找（包括所有大小写变体）
+  for (const variant of variants) {
+    const variantUrl = new URL(variant, request.url);
+    const cachedResp = await caches.match(variantUrl);
+    if (cachedResp) {
+      return cachedResp;
+    }
+  }
+  
+  // 缓存中没有，尝试从网络获取（包括所有大小写变体）
+  for (const variant of variants) {
+    const variantUrl = new URL(variant, request.url);
+    try {
+      const netResp = await fetch(variantUrl);
+      if (netResp && netResp.status === 200) {
+        // 成功获取，缓存原始请求URL（保持一致性）
+        const clone = netResp.clone();
+        if (request.url.startsWith(self.location.origin)) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, clone);
+        }
+        return netResp;
+      }
+    } catch (e) {
+      // 继续尝试下一个变体
+      continue;
+    }
+  }
+  
+  // 所有变体都失败
+  return null;
+}
+
 // 拦截请求：根据缓存策略决定使用缓存优先还是网络优先
 self.addEventListener('fetch', event => {
   // 只处理 GET 请求
@@ -142,37 +205,40 @@ self.addEventListener('fetch', event => {
   
   // 对于图片和音频，根据缓存策略处理
   if (isImageOrAudio && cacheFirstMode) {
-    // 缓存优先模式：先查缓存，缓存没有再请求网络
+    // 缓存优先模式：先查缓存，缓存没有再请求网络（支持大小写兼容）
     event.respondWith(
-      caches.match(event.request).then(cachedResp => {
-        if (cachedResp) {
-          return cachedResp;
+      fetchWithCaseFallback(event.request).then(resp => {
+        if (resp) {
+          return resp;
         }
-        // 缓存没有，请求网络
-        return fetch(event.request).then(netResp => {
-          if (netResp && netResp.status === 200) {
-            const clone = netResp.clone();
-            // 只缓存同源资源
-            if (event.request.url.startsWith(self.location.origin)) {
-              caches.open(CACHE_NAME).then(cache => {
-                cache.put(event.request, clone);
-              });
-            }
-          }
-          return netResp;
-        }).catch(() => {
-          return new Response('网络不可用，且缓存中无此资源', {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: new Headers({
-              'Content-Type': 'text/plain'
-            })
-          });
+        return new Response('网络不可用，且缓存中无此资源', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: new Headers({
+            'Content-Type': 'text/plain'
+          })
+        });
+      })
+    );
+  } else if (isImageOrAudio) {
+    // 网络优先模式：先请求网络，失败再使用缓存（支持大小写兼容）
+    event.respondWith(
+      fetchWithCaseFallback(event.request).then(resp => {
+        if (resp) {
+          return resp;
+        }
+        // 如果网络和缓存都失败，返回错误响应
+        return new Response('网络不可用，且缓存中无此资源', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: new Headers({
+            'Content-Type': 'text/plain'
+          })
         });
       })
     );
   } else {
-    // 网络优先模式：先请求网络，失败再使用缓存
+    // 非图片/音频资源，使用原有逻辑
     event.respondWith(
       fetch(event.request)
         .then(netResp => {

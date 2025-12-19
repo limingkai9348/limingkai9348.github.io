@@ -225,15 +225,84 @@ fetch(`data/${pack}.json`)
   });
 
 // =====================
+// 文件路径大小写兼容处理
+// =====================
+function getCaseVariants(path) {
+  // 获取文件扩展名的大小写变体
+  const variants = [path]; // 原始路径
+  const extMatch = path.match(/\.([^.]+)$/);
+  if (extMatch) {
+    const ext = extMatch[1];
+    const basePath = path.substring(0, path.length - ext.length - 1);
+    // 添加小写、大写、首字母大写变体
+    if (ext.toLowerCase() !== ext) {
+      variants.push(basePath + '.' + ext.toLowerCase());
+    }
+    if (ext.toUpperCase() !== ext) {
+      variants.push(basePath + '.' + ext.toUpperCase());
+    }
+    if (ext.length > 0) {
+      const capitalized = ext.charAt(0).toUpperCase() + ext.slice(1).toLowerCase();
+      if (capitalized !== ext) {
+        variants.push(basePath + '.' + capitalized);
+      }
+    }
+  }
+  return [...new Set(variants)]; // 去重
+}
+
+// 尝试加载资源，支持大小写兼容
+function loadResourceWithFallback(element, path, isImage = false) {
+  const variants = getCaseVariants(path);
+  let currentIndex = 0;
+  
+  function tryNext() {
+    if (currentIndex >= variants.length) {
+      console.error(`无法加载资源: ${path} (已尝试所有大小写变体)`);
+      return;
+    }
+    
+    const currentPath = variants[currentIndex];
+    
+    if (isImage) {
+      // 图片：直接设置src，通过onerror处理失败
+      const originalOnError = element.onerror;
+      element.onerror = () => {
+        currentIndex++;
+        tryNext();
+      };
+      element.onload = () => {
+        element.onerror = originalOnError; // 恢复原始错误处理
+      };
+      element.src = currentPath;
+    } else {
+      // 音频：直接设置src，通过error事件处理失败
+      const originalOnError = element.onerror;
+      element.onerror = () => {
+        currentIndex++;
+        tryNext();
+      };
+      element.onloadeddata = () => {
+        element.onerror = originalOnError; // 恢复原始错误处理
+      };
+      element.src = currentPath;
+    }
+  }
+  
+  tryNext();
+}
+
+// =====================
 // 显示当前卡片
 // =====================
 const description = document.getElementById('description');
 
 function show() {
   const item = cards[index];
-  image.src = item.image;
+  // 使用大小写兼容的方式加载图片和音频
+  loadResourceWithFallback(image, item.image, true);
+  loadResourceWithFallback(audio, item.audio, false);
   word.textContent = item.name + (item.name_english ? ' ' + item.name_english : '');
-  audio.src = item.audio;
   
   // 显示描述文本
   if (item.description) {
@@ -260,10 +329,10 @@ function preloadNext() {
   if (next >= cards.length) return;
 
   const img = new Image();
-  img.src = cards[next].image;
+  loadResourceWithFallback(img, cards[next].image, true);
 
   const aud = new Audio();
-  aud.src = cards[next].audio;
+  loadResourceWithFallback(aud, cards[next].audio, false);
 }
 
 // =====================
