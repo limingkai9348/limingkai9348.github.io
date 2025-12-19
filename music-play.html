@@ -334,9 +334,9 @@ body {
   <div class="description" id="description"></div>
 </div>
 
-<div class="nav prev" onclick="prev()">◀</div>
+<div class="nav prev" onclick="prev()">前</div>
 <div class="play-pause-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</div>
-<div class="nav next" onclick="next()">▶</div>
+<div class="nav next" onclick="next()">后</div>
 
 <audio id="audio" crossOrigin="anonymous"></audio>
 
@@ -344,8 +344,41 @@ body {
 // =====================
 // 注册 Service Worker（离线）
 // =====================
+let serviceWorkerRegistration = null;
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    serviceWorkerRegistration = reg;
+    // 读取缓存优先模式设置并通知 Service Worker
+    const cacheFirstMode = localStorage.getItem('cacheFirstMode') === 'true';
+    if (reg.active) {
+      reg.active.postMessage({
+        type: 'updateCacheStrategy',
+        cacheFirst: cacheFirstMode
+      });
+    } else {
+      // 如果 Service Worker 还未激活，等待激活后再发送
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'activated' && reg.active) {
+            reg.active.postMessage({
+              type: 'updateCacheStrategy',
+              cacheFirst: cacheFirstMode
+            });
+          }
+        });
+      });
+      // 如果已经有激活的 Service Worker，直接发送
+      navigator.serviceWorker.ready.then(() => {
+        if (reg.active) {
+          reg.active.postMessage({
+            type: 'updateCacheStrategy',
+            cacheFirst: cacheFirstMode
+          });
+        }
+      });
+    }
+  });
 }
 
 // =====================
