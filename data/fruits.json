@@ -3,7 +3,7 @@
     "id": 200,
     "name": "苹果",
     "image": "assets/fruits/200.JPG",
-    "audio": "assets/fruits/200.MP3",
+    "audio": "assets/fruits/200.mp3",
     "description": "苹果长在树上，里面有维生素，常吃能让身体更有力气。",
     "name_english": "Apple"
   },
@@ -11,7 +11,7 @@
     "id": 201,
     "name": "香蕉",
     "image": "assets/fruits/201.JPG",
-    "audio": "assets/fruits/201.MP3",
+    "audio": "assets/fruits/201.mp3",
     "description": "香蕉是长在热带的水果，能给身体提供能量。",
     "name_english": "Banana"
   },
@@ -19,7 +19,7 @@
     "id": 202,
     "name": "草莓",
     "image": "assets/fruits/202.JPG",
-    "audio": "assets/fruits/202.MP3",
+    "audio": "assets/fruits/202.mp3",
     "description": "草莓不是长在树上的，它有很多小籽在外面。",
     "name_english": "Strawberry"
   },
@@ -27,7 +27,7 @@
     "id": 203,
     "name": "葡萄",
     "image": "assets/fruits/203.JPG",
-    "audio": "assets/fruits/203.MP3",
+    "audio": "assets/fruits/203.mp3",
     "description": "葡萄一颗一颗连在一起，能做成果汁和葡萄干。",
     "name_english": "Grape"
   },
@@ -35,7 +35,7 @@
     "id": 204,
     "name": "西瓜",
     "image": "assets/fruits/204.JPG",
-    "audio": "assets/fruits/204.MP3",
+    "audio": "assets/fruits/204.mp3",
     "description": "西瓜里有很多水，天气热的时候吃可以解渴。",
     "name_english": "Watermelon"
   },
@@ -43,7 +43,7 @@
     "id": 205,
     "name": "橘子",
     "image": "assets/fruits/205.JPG",
-    "audio": "assets/fruits/205.MP3",
+    "audio": "assets/fruits/205.mp3",
     "description": "橘子含有维生素C，可以帮助身体更健康。",
     "name_english": "Tangerine"
   },
@@ -51,7 +51,7 @@
     "id": 206,
     "name": "桃子",
     "image": "assets/fruits/206.JPG",
-    "audio": "assets/fruits/206.MP3",
+    "audio": "assets/fruits/206.mp3",
     "description": "桃子成熟时会变软变甜，是夏天的水果。",
     "name_english": "Peach"
   },
@@ -59,7 +59,7 @@
     "id": 207,
     "name": "梨",
     "image": "assets/fruits/207.JPG",
-    "audio": "assets/fruits/207.MP3",
+    "audio": "assets/fruits/207.mp3",
     "description": "梨的水分很多，吃起来清爽，适合口渴时吃。",
     "name_english": "Pear"
   },
@@ -67,7 +67,7 @@
     "id": 208,
     "name": "菠萝",
     "image": "assets/fruits/208.JPG",
-    "audio": "assets/fruits/208.MP3",
+    "audio": "assets/fruits/208.mp3",
     "description": "菠萝长在地面上，成熟后果肉会变甜。菠萝，Pineapple,菠萝,Pineapple",
     "name_english": "Pineapple"
   },
@@ -75,7 +75,7 @@
     "id": 209,
     "name": "芒果",
     "image": "assets/fruits/209.JPG",
-    "audio": "assets/fruits/209.MP3",
+    "audio": "assets/fruits/209.mp3",
     "description": "芒果生长在温暖的地方，颜色和味道都很浓。",
     "name_english": "Mango"
   },
@@ -83,7 +83,7 @@
     "id": 210,
     "name": "樱桃",
     "image": "assets/fruits/210.JPG",
-    "audio": "assets/fruits/210.MP3",
+    "audio": "assets/fruits/210.mp3",
     "description": "樱桃里面有核，是要吐出来的种子。",
     "name_english": "Cherry"
   },
@@ -91,7 +91,7 @@
     "id": 211,
     "name": "猕猴桃",
     "image": "assets/fruits/211.JPG",
-    "audio": "assets/fruits/211.MP3",
+    "audio": "assets/fruits/211.mp3",
     "description": "猕猴桃含有很多营养，小黑点都是籽。",
     "name_english": "Kiwi"
   },
@@ -99,7 +99,7 @@
     "id": 212,
     "name": "蓝莓",
     "image": "assets/fruits/212.JPG",
-    "audio": "assets/fruits/212.MP3",
+    "audio": "assets/fruits/212.mp3",
     "description": "蓝莓个头小，但营养多，是小浆果。",
     "name_english": "Blueberry"
   },
@@ -107,7 +107,7 @@
     "id": 213,
     "name": "石榴",
     "image": "assets/fruits/213.JPG",
-    "audio": "assets/fruits/213.MP3",
+    "audio": "assets/fruits/213.mp3",
     "description": "石榴里有很多果粒，每一粒都是果实。",
     "name_english": "Pomegranate"
   },
@@ -115,7 +115,7 @@
     "id": 214,
     "name": "柚子",
     "image": "assets/fruits/214.JPG",
-    "audio": "assets/fruits/214.MP3",
+    "audio": "assets/fruits/214.mp3",
     "description": "柚子皮很厚，可以保护里面的果肉。",
     "name_english": "Pomelo"
   },
@@ -123,7 +123,7 @@
     "id": 215,
     "name": "荔枝",
     "image": "assets/fruits/215.JPG",
-    "audio": "assets/fruits/215.MP3",
+    "audio": "assets/fruits/215.mp3",
     "description": "荔枝成熟后很甜，是夏天常见的水果。",
     "name_english": "Lychee"
   },
@@ -131,7 +131,7 @@
     "id": 216,
     "name": "龙眼",
     "image": "assets/fruits/216.JPG",
-    "audio": "assets/fruits/216.MP3",
+    "audio": "assets/fruits/216.mp3",
     "description": "龙眼和荔枝有点像，里面也有种子。",
     "name_english": "Longan"
   },
@@ -139,7 +139,7 @@
     "id": 217,
     "name": "哈密瓜",
     "image": "assets/fruits/217.JPG",
-    "audio": "assets/fruits/217.MP3",
+    "audio": "assets/fruits/217.mp3",
     "description": "哈密瓜成熟时会变甜，闻起来很香。",
     "name_english": "Hami Melon"
   },
@@ -147,7 +147,7 @@
     "id": 218,
     "name": "甜瓜",
     "image": "assets/fruits/218.JPG",
-    "audio": "assets/fruits/218.MP3",
+    "audio": "assets/fruits/218.mp3",
     "description": "甜瓜含水多，是植物的果实。",
     "name_english": "Melon"
   },
@@ -155,7 +155,7 @@
     "id": 219,
     "name": "木瓜",
     "image": "assets/fruits/219.JPG",
-    "audio": "assets/fruits/219.MP3",
+    "audio": "assets/fruits/219.mp3",
     "description": "木瓜没熟时是绿色的，熟了会变黄。",
     "name_english": "Papaya"
   },
@@ -163,7 +163,7 @@
     "id": 220,
     "name": "山竹",
     "image": "assets/fruits/220.JPG",
-    "audio": "assets/fruits/220.MP3",
+    "audio": "assets/fruits/220.mp3",
     "description": "山竹外壳很硬，用来保护里面的果肉。",
     "name_english": "Mangosteen"
   },
@@ -171,7 +171,7 @@
     "id": 221,
     "name": "椰子",
     "image": "assets/fruits/221.JPG",
-    "audio": "assets/fruits/221.MP3",
+    "audio": "assets/fruits/221.mp3",
     "description": "椰子能装很多水，外壳可以保护果实。",
     "name_english": "Coconut"
   },
@@ -179,7 +179,7 @@
     "id": 222,
     "name": "榴莲",
     "image": "assets/fruits/222.JPG",
-    "audio": "assets/fruits/222.MP3",
+    "audio": "assets/fruits/222.mp3",
     "description": "榴莲有尖刺，是为了防止动物吃掉它。",
     "name_english": "Durian"
   },
@@ -187,7 +187,7 @@
     "id": 223,
     "name": "牛油果",
     "image": "assets/fruits/223.JPG",
-    "audio": "assets/fruits/223.MP3",
+    "audio": "assets/fruits/223.mp3",
     "description": "牛油果里面有一颗大种子，果肉很特别。",
     "name_english": "Avocado"
   },
@@ -195,7 +195,7 @@
     "id": 224,
     "name": "柠檬",
     "image": "assets/fruits/224.JPG",
-    "audio": "assets/fruits/224.MP3",
+    "audio": "assets/fruits/224.mp3",
     "description": "柠檬味道酸，是因为里面有天然的酸。",
     "name_english": "Lemon"
   },
@@ -203,7 +203,7 @@
     "id": 225,
     "name": "橙子",
     "image": "assets/fruits/225.JPG",
-    "audio": "assets/fruits/225.MP3",
+    "audio": "assets/fruits/225.mp3",
     "description": "橙子是柑橘类水果，能榨成果汁。",
     "name_english": "Orange"
   },
@@ -211,7 +211,7 @@
     "id": 226,
     "name": "火龙果",
     "image": "assets/fruits/226.JPG",
-    "audio": "assets/fruits/226.MP3",
+    "audio": "assets/fruits/226.mp3",
     "description": "火龙果长在仙人掌一样的植物上，里面的小黑点是籽。",
     "name_english": "Dragon Fruit"
   },
@@ -219,7 +219,7 @@
     "id": 227,
     "name": "杏子",
     "image": "assets/fruits/227.JPG",
-    "audio": "assets/fruits/227.MP3",
+    "audio": "assets/fruits/227.mp3",
     "description": "杏子成熟时颜色会变黄，里面有一颗硬硬的核。",
     "name_english": "Apricot"
   },
@@ -227,7 +227,7 @@
     "id": 228,
     "name": "李子",
     "image": "assets/fruits/228.JPG",
-    "audio": "assets/fruits/228.MP3",
+    "audio": "assets/fruits/228.mp3",
     "description": "李子是核果类水果，外面是果肉，里面是种子。",
     "name_english": "Plum"
   },
@@ -235,7 +235,7 @@
     "id": 229,
     "name": "柿子",
     "image": "assets/fruits/229.JPG",
-    "audio": "assets/fruits/229.MP3",
+    "audio": "assets/fruits/229.mp3",
     "description": "柿子没熟时不能吃，成熟后才会变甜。",
     "name_english": "Persimmon"
   },
@@ -243,7 +243,7 @@
     "id": 230,
     "name": "桑葚",
     "image": "assets/fruits/230.JPG",
-    "audio": "assets/fruits/230.MP3",
+    "audio": "assets/fruits/230.mp3",
     "description": "桑葚是一串一串长的果实，颜色会慢慢变深。",
     "name_english": "Mulberry"
   },
@@ -251,7 +251,7 @@
     "id": 231,
     "name": "无花果",
     "image": "assets/fruits/231.JPG",
-    "audio": "assets/fruits/231.MP3",
+    "audio": "assets/fruits/231.mp3",
     "description": "无花果其实有花，只是花藏在果实里面。",
     "name_english": "Fig"
   },
@@ -259,7 +259,7 @@
     "id": 232,
     "name": "杨桃",
     "image": "assets/fruits/232.JPG",
-    "audio": "assets/fruits/232.MP3",
+    "audio": "assets/fruits/232.mp3",
     "description": "杨桃切开后像星星，是从树上长出来的果实。",
     "name_english": "Starfruit"
   },
@@ -267,7 +267,7 @@
     "id": 233,
     "name": "莲雾",
     "image": "assets/fruits/233.JPG",
-    "audio": "assets/fruits/233.MP3",
+    "audio": "assets/fruits/233.mp3",
     "description": "莲雾含水量高，吃起来清爽多汁。",
     "name_english": "Wax Apple"
   },
@@ -275,7 +275,7 @@
     "id": 234,
     "name": "枇杷",
     "image": "assets/fruits/234.JPG",
-    "audio": "assets/fruits/234.MP3",
+    "audio": "assets/fruits/234.mp3",
     "description": "枇杷外皮薄，里面有几颗大种子。",
     "name_english": "Loquat"
   },
@@ -283,7 +283,7 @@
     "id": 235,
     "name": "番石榴",
     "image": "assets/fruits/235.JPG",
-    "audio": "assets/fruits/235.MP3",
+    "audio": "assets/fruits/235.mp3",
     "description": "番石榴果肉里有很多小籽，是热带水果。",
     "name_english": "Guava"
   },
@@ -291,7 +291,7 @@
     "id": 236,
     "name": "百香果",
     "image": "assets/fruits/236.JPG",
-    "audio": "assets/fruits/236.MP3",
+    "audio": "assets/fruits/236.mp3",
     "description": "百香果里面有果汁和籽，香味特别浓。",
     "name_english": "Passion Fruit"
   },
@@ -299,7 +299,7 @@
     "id": 237,
     "name": "山楂",
     "image": "assets/fruits/237.JPG",
-    "audio": "assets/fruits/237.MP3",
+    "audio": "assets/fruits/237.mp3",
     "description": "山楂味道酸，是很多零食的原料。",
     "name_english": "Hawthorn"
   },
@@ -307,7 +307,7 @@
     "id": 238,
     "name": "枸杞",
     "image": "assets/fruits/238.JPG",
-    "audio": "assets/fruits/238.MP3",
+    "audio": "assets/fruits/238.mp3",
     "description": "枸杞是一种小果实，干了以后也能吃。",
     "name_english": "Goji Berry"
   },
@@ -315,7 +315,7 @@
     "id": 239,
     "name": "枣",
     "image": "assets/fruits/239.JPG",
-    "audio": "assets/fruits/239.MP3",
+    "audio": "assets/fruits/239.mp3",
     "description": "枣成熟时是红色的，晒干后能保存很久。",
     "name_english": "Jujube"
   },
@@ -323,7 +323,7 @@
     "id": 240,
     "name": "金桔",
     "image": "assets/fruits/240.JPG",
-    "audio": "assets/fruits/240.MP3",
+    "audio": "assets/fruits/240.mp3",
     "description": "金桔个头小，皮和果肉都可以一起吃。",
     "name_english": "Kumquat"
   },
@@ -331,7 +331,7 @@
     "id": 241,
     "name": "西梅",
     "image": "assets/fruits/241.JPG",
-    "audio": "assets/fruits/241.MP3",
+    "audio": "assets/fruits/241.mp3",
     "description": "西梅是李子的一种，可以新鲜吃或晒干吃。",
     "name_english": "Prune"
   },
@@ -339,7 +339,7 @@
     "id": 242,
     "name": "覆盆子",
     "image": "assets/fruits/242.JPG",
-    "audio": "assets/fruits/242.MP3",
+    "audio": "assets/fruits/242.mp3",
     "description": "覆盆子由很多小果粒组成，是浆果。",
     "name_english": "Raspberry"
   },
@@ -347,7 +347,7 @@
     "id": 243,
     "name": "指橙",
     "image": "assets/fruits/243.JPG",
-    "audio": "assets/fruits/243.MP3",
+    "audio": "assets/fruits/243.mp3",
     "description": "指橙切开后，果肉像一颗颗小珠子。",
     "name_english": "Finger Lime"
   },
@@ -355,7 +355,7 @@
     "id": 244,
     "name": "杨梅",
     "image": "assets/fruits/244.JPG",
-    "audio": "assets/fruits/244.MP3",
+    "audio": "assets/fruits/244.mp3",
     "description": "杨梅成熟时是红色的，味道酸甜。",
     "name_english": "Chinese Bayberry"
   },
@@ -363,7 +363,7 @@
     "id": 245,
     "name": "沙果",
     "image": "assets/fruits/245.JPG",
-    "audio": "assets/fruits/245.MP3",
+    "audio": "assets/fruits/245.mp3",
     "description": "沙果像小苹果，是苹果的一种。",
     "name_english": "Chinese Crabapple"
   },
@@ -371,7 +371,7 @@
     "id": 246,
     "name": "释迦",
     "image": "assets/fruits/246.JPG",
-    "audio": "assets/fruits/246.MP3",
+    "audio": "assets/fruits/246.mp3",
     "description": "释迦外皮像鳞片，里面果肉柔软。",
     "name_english": "Sugar Apple"
   },
@@ -379,7 +379,7 @@
     "id": 247,
     "name": "荸荠",
     "image": "assets/fruits/247.JPG",
-    "audio": "assets/fruits/247.MP3",
+    "audio": "assets/fruits/247.mp3",
     "description": "荸荠长在水里，虽然像水果，其实是植物茎。",
     "name_english": "Water Chestnut"
   },
@@ -387,7 +387,7 @@
     "id": 248,
     "name": "人参果",
     "image": "assets/fruits/248.JPG",
-    "audio": "assets/fruits/248.MP3",
+    "audio": "assets/fruits/248.mp3",
     "description": "人参果是茄子家族的果实，味道清甜。",
     "name_english": "Pepino"
   },
@@ -395,7 +395,7 @@
     "id": 249,
     "name": "乌梅",
     "image": "assets/fruits/249.JPG",
-    "audio": "assets/fruits/249.MP3",
+    "audio": "assets/fruits/249.mp3",
     "description": "乌梅是梅子晒干做成的，可以泡水喝。",
     "name_english": "Dark Plum"
   }
