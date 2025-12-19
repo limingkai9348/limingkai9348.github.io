@@ -23,7 +23,7 @@ html, body {
 }
 
 body {
-  background: #fff;
+  background: #f5f5f5;
   touch-action: pan-x;
 }
 
@@ -50,14 +50,40 @@ body {
   align-items: center;
   padding-top: 60px;
   padding-bottom: 100px;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 /* 图片容器 - 1:1比例，100%宽度 */
 .image-container {
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
+}
+
+/* iPad和宽屏设备适配 */
+@media (min-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+  
+  .image-container {
+    width: 100%;
+  }
+  
+  .word {
+    width: 100%;
+  }
+  
+  .description {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 .card img {
@@ -128,6 +154,21 @@ body {
 
 .next {
   right: 20px;
+}
+
+/* iPad和宽屏设备上，按钮相对于内容区域居中 */
+@media (min-width: 768px) {
+  .prev {
+    left: calc(50% - 300px + 20px);
+  }
+  
+  .next {
+    right: calc(50% - 300px + 20px);
+  }
+  
+  .back {
+    left: calc(50% - 300px + 20px);
+  }
 }
 
 .nav:active {
