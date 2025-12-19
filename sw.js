@@ -72,6 +72,50 @@ async function sendToClient(clientId, message) {
   }
 }
 
+// 尝试获取资源（支持大小写兼容）
+async function fetchResourceWithCaseFallback(url) {
+  // 获取当前页面的 origin（从客户端获取）
+  let origin = '';
+  try {
+    const clients = await self.clients.matchAll();
+    if (clients.length > 0 && clients[0].url) {
+      const clientUrl = new URL(clients[0].url);
+      origin = clientUrl.origin;
+    }
+  } catch (e) {
+    // 如果无法获取，尝试使用 self.location（某些浏览器支持）
+    try {
+      origin = self.location.origin;
+    } catch (e2) {
+      // 如果都失败，使用相对路径（浏览器会自动使用当前 origin）
+      origin = '';
+    }
+  }
+  
+  const fullUrl = url.startsWith('/') ? url : '/' + url;
+  const baseUrl = origin ? `${origin}${fullUrl}` : fullUrl;
+  const urlObj = new URL(baseUrl);
+  const pathname = urlObj.pathname;
+  const variants = getCaseVariants(pathname);
+  
+  // 尝试所有大小写变体
+  for (const variant of variants) {
+    const variantUrl = new URL(variant, urlObj.origin);
+    try {
+      const res = await fetch(variantUrl);
+      if (res && res.ok) {
+        return { response: res, actualUrl: fullUrl }; // 返回原始URL用于缓存键
+      }
+    } catch (e) {
+      // 继续尝试下一个变体
+      continue;
+    }
+  }
+  
+  // 所有变体都失败
+  throw new Error(`无法找到资源: ${fullUrl} (已尝试所有大小写变体)`);
+}
+
 // 手动缓存资源函数
 async function cacheResources(resources, clientId) {
   const cache = await caches.open(CACHE_NAME);
@@ -84,16 +128,16 @@ async function cacheResources(resources, clientId) {
   for (let i = 0; i < resources.length; i += batchSize) {
     const batch = resources.slice(i, i + batchSize);
     const results = await Promise.allSettled(
-      batch.map(url => {
-        // 确保路径以 / 开头
-        const fullUrl = url.startsWith('/') ? url : '/' + url;
-        return fetch(fullUrl).then(res => {
-          if (res.ok) {
-            return cache.put(fullUrl, res);
-          } else {
-            throw new Error(`HTTP ${res.status}`);
-          }
-        });
+      batch.map(async url => {
+        try {
+          // 使用大小写兼容的方式获取资源
+          const { response, actualUrl } = await fetchResourceWithCaseFallback(url);
+          // 使用原始URL作为缓存键，保持一致性
+          const cacheUrl = url.startsWith('/') ? url : '/' + url;
+          return cache.put(cacheUrl, response);
+        } catch (error) {
+          throw error;
+        }
       })
     );
     
