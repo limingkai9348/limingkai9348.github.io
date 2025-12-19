@@ -35,10 +35,28 @@ h1 {
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.cache-control h2 {
-  margin: 0 0 12px 0;
+.cache-control summary {
   font-size: 18px;
   font-weight: normal;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+  list-style: none;
+}
+.cache-control summary::-webkit-details-marker {
+  display: none;
+}
+.cache-control summary::before {
+  content: '▶ ';
+  display: inline-block;
+  transition: transform 0.2s;
+  margin-right: 4px;
+}
+.cache-control[open] summary::before {
+  transform: rotate(90deg);
+}
+.cache-control-content {
+  margin-top: 12px;
 }
 .cache-switch {
   display: flex;
@@ -119,14 +137,22 @@ h1 {
 <div id="list"></div>
 
 <div class="cache-control">
-  <h2>缓存设置</h2>
-  <div class="cache-switch">
-    <span class="switch-label">缓存优先模式</span>
-    <div class="switch" id="cacheSwitch"></div>
-  </div>
-  <button class="cache-button" id="cacheButton">手动缓存所有资源</button>
-  <div class="cache-progress" id="cacheProgress"></div>
-  <div class="cache-status" id="cacheStatus"></div>
+  <details>
+    <summary>缓存设置</summary>
+    <div class="cache-control-content">
+      <div class="cache-switch">
+        <span class="switch-label">缓存优先模式</span>
+        <div class="switch" id="cacheSwitch"></div>
+      </div>
+      <div class="cache-switch">
+        <span class="switch-label">强制缓存（即使文件存在也重新缓存）</span>
+        <div class="switch" id="forceCacheSwitch"></div>
+      </div>
+      <button class="cache-button" id="cacheButton">手动缓存所有资源</button>
+      <div class="cache-progress" id="cacheProgress"></div>
+      <div class="cache-status" id="cacheStatus"></div>
+    </div>
+  </details>
 </div>
 
 
@@ -143,6 +169,7 @@ if ('serviceWorker' in navigator) {
 
 // 缓存控制相关元素
 const cacheSwitch = document.getElementById('cacheSwitch');
+const forceCacheSwitch = document.getElementById('forceCacheSwitch');
 const cacheButton = document.getElementById('cacheButton');
 const cacheProgress = document.getElementById('cacheProgress');
 const cacheStatus = document.getElementById('cacheStatus');
@@ -152,6 +179,18 @@ const cacheFirstMode = localStorage.getItem('cacheFirstMode') === 'true';
 if (cacheFirstMode) {
   cacheSwitch.classList.add('active');
 }
+
+// 加载强制缓存开关状态
+const forceCacheMode = localStorage.getItem('forceCacheMode') === 'true';
+if (forceCacheMode) {
+  forceCacheSwitch.classList.add('active');
+}
+
+// 切换强制缓存模式
+forceCacheSwitch.onclick = () => {
+  const isActive = forceCacheSwitch.classList.toggle('active');
+  localStorage.setItem('forceCacheMode', isActive);
+};
 
 // 切换缓存优先模式
 cacheSwitch.onclick = () => {
@@ -207,8 +246,15 @@ cacheButton.onclick = async () => {
             cacheStatus.textContent = `当前: ${url.split('/').pop()}`;
           }
         } else if (data.type === 'cacheComplete') {
-          const { success, failed, total } = data;
-          cacheProgress.textContent = `缓存完成！成功: ${success}, 失败: ${failed}, 总计: ${total}`;
+          const { success, failed, skipped, updated, total } = data;
+          let statusText = `缓存完成！成功: ${success}, 失败: ${failed}, 总计: ${total}`;
+          if (skipped > 0) {
+            statusText += `, 已跳过: ${skipped}`;
+          }
+          if (updated > 0) {
+            statusText += `, 已更新: ${updated}`;
+          }
+          cacheProgress.textContent = statusText;
           cacheStatus.textContent = '';
           cacheButton.disabled = false;
           navigator.serviceWorker.removeEventListener('message', messageHandler);
@@ -222,10 +268,14 @@ cacheButton.onclick = async () => {
       
       navigator.serviceWorker.addEventListener('message', messageHandler);
       
+      // 获取强制缓存状态
+      const forceUpdate = forceCacheSwitch.classList.contains('active');
+      
       // 发送缓存请求
       serviceWorkerRegistration.active.postMessage({
         type: 'cacheResources',
-        resources: resourceList
+        resources: resourceList,
+        forceUpdate: forceUpdate
       });
     } else {
       cacheProgress.textContent = 'Service Worker 未就绪，请刷新页面后重试';

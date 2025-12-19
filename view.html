@@ -360,17 +360,36 @@ function goBack() {
 // 播放音频函数（带错误处理）
 // =====================
 function playAudio() {
+  // 检查音频是否已加载，如果src为空则尝试重新加载
+  if (!audio.src || audio.src === window.location.href) {
+    const item = cards[index];
+    if (item && item.audio) {
+      loadResourceWithFallback(audio, item.audio, false);
+      // 等待音频加载完成后再播放
+      audio.addEventListener('loadeddata', () => {
+        audio.play().catch(err => {
+          console.error('播放音频失败:', err);
+        });
+      }, { once: true });
+      return;
+    }
+  }
+  
   if (audio.src) {
-    audio.play().catch(err => {
-      console.error('播放音频失败:', err);
-    });
+    // 如果音频已暂停，重新播放
+    if (audio.paused) {
+      audio.play().catch(err => {
+        console.error('播放音频失败:', err);
+      });
+    } else {
+      // 如果正在播放，重新开始
+      audio.currentTime = 0;
+      audio.play().catch(err => {
+        console.error('播放音频失败:', err);
+      });
+    }
   }
 }
-
-// =====================
-// 点击播放（只点击图片区域时播放）
-// =====================
-document.querySelector('.image-container').onclick = () => playAudio();
 
 // =====================
 // 滑动切换（只在图片区域）
@@ -379,8 +398,25 @@ let startX = 0;
 let startY = 0;
 let isImageArea = false;
 let hasMoved = false;
+let touchHandled = false; // 防止触摸事件和点击事件重复触发
 
 const imageContainer = document.querySelector('.image-container');
+
+// =====================
+// 点击播放（只点击图片区域时播放）
+// =====================
+if (imageContainer) {
+  // 使用 addEventListener 而不是 onclick，确保在移动设备上也能工作
+  imageContainer.addEventListener('click', (e) => {
+    // 如果触摸事件已经处理过，就不重复处理点击事件
+    if (touchHandled) {
+      touchHandled = false;
+      return;
+    }
+    e.preventDefault();
+    playAudio();
+  }, { passive: false });
+}
 
 imageContainer.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
@@ -404,9 +440,14 @@ imageContainer.addEventListener('touchend', e => {
   if (hasMoved && Math.abs(dx) > dy && Math.abs(dx) > 50) {
     if (dx > 50) prev();
     if (dx < -50) next();
+    // 标记触摸事件已处理，防止点击事件重复触发
+    touchHandled = true;
   } else if (!hasMoved) {
     // 如果没有滑动，则播放音频
+    e.preventDefault();
     playAudio();
+    // 标记触摸事件已处理，防止点击事件重复触发
+    touchHandled = true;
   }
   
   isImageArea = false;
