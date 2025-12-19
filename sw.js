@@ -75,6 +75,17 @@ async function sendToClient(clientId, message) {
 
 // 尝试获取资源（支持大小写兼容）
 async function fetchResourceWithCaseFallback(url) {
+  // 检测是否是在线URL（http:// 或 https:// 开头）
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    // 在线URL：直接fetch，不进行大小写变体处理
+    const res = await fetch(url);
+    if (res && res.ok) {
+      return { response: res, actualUrl: url };
+    }
+    throw new Error(`无法获取在线资源: ${url} (状态码: ${res?.status})`);
+  }
+  
+  // 相对路径：进行大小写兼容处理
   // 获取当前页面的 origin（从客户端获取）
   let origin = '';
   try {
@@ -119,6 +130,14 @@ async function fetchResourceWithCaseFallback(url) {
 
 // 检查资源是否已缓存（支持大小写兼容）
 async function isResourceCached(cache, url) {
+  // 检测是否是在线URL（http:// 或 https:// 开头）
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    // 在线URL：直接使用完整URL检查缓存
+    const cached = await cache.match(url);
+    return !!cached;
+  }
+  
+  // 相对路径：进行大小写兼容检查
   const cacheUrl = url.startsWith('/') ? url : '/' + url;
   const variants = getCaseVariants(cacheUrl);
   
@@ -147,7 +166,9 @@ async function cacheResources(resources, clientId, forceUpdate = false) {
     const batch = resources.slice(i, i + batchSize);
     const results = await Promise.allSettled(
       batch.map(async url => {
-        const cacheUrl = url.startsWith('/') ? url : '/' + url;
+        // 检测是否是在线URL（http:// 或 https:// 开头）
+        const isOnlineUrl = url.startsWith('http://') || url.startsWith('https://');
+        const cacheUrl = isOnlineUrl ? url : (url.startsWith('/') ? url : '/' + url);
         
         // 如果强制更新，跳过缓存检查
         const wasCached = await isResourceCached(cache, url);
@@ -156,8 +177,18 @@ async function cacheResources(resources, clientId, forceUpdate = false) {
         }
         
         try {
-          // 使用大小写兼容的方式获取资源
-          const { response, actualUrl } = await fetchResourceWithCaseFallback(url);
+          let response;
+          if (isOnlineUrl) {
+            // 在线URL：直接fetch，不进行大小写变体处理
+            response = await fetch(url);
+            if (!response || !response.ok) {
+              throw new Error(`无法获取在线资源: ${url} (状态码: ${response?.status})`);
+            }
+          } else {
+            // 相对路径：使用大小写兼容的方式获取资源
+            const result = await fetchResourceWithCaseFallback(url);
+            response = result.response;
+          }
           // 使用原始URL作为缓存键，保持一致性
           await cache.put(cacheUrl, response);
           return { 
@@ -174,7 +205,8 @@ async function cacheResources(resources, clientId, forceUpdate = false) {
     // 统计本批次的结果
     results.forEach((result, index) => {
       const url = batch[index];
-      const fullUrl = url.startsWith('/') ? url : '/' + url;
+      const isOnlineUrl = url.startsWith('http://') || url.startsWith('https://');
+      const fullUrl = isOnlineUrl ? url : (url.startsWith('/') ? url : '/' + url);
       
       if (result.status === 'fulfilled') {
         if (result.value.skipped) {
@@ -240,6 +272,34 @@ function getCaseVariants(path) {
 // 尝试从缓存或网络获取资源（支持大小写兼容）
 async function fetchWithCaseFallback(request) {
   const url = new URL(request.url);
+  const isOnlineUrl = url.protocol === 'http:' || url.protocol === 'https:';
+  
+  // 检测是否是在线URL
+  if (isOnlineUrl) {
+    // 在线URL：先尝试从缓存查找
+    const cachedResp = await caches.match(request.url);
+    if (cachedResp) {
+      return cachedResp;
+    }
+    
+    // 缓存中没有，尝试从网络获取
+    try {
+      const netResp = await fetch(request.url);
+      if (netResp && netResp.status === 200) {
+        // 成功获取，缓存在线URL（跨域资源也可以缓存）
+        const clone = netResp.clone();
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(request.url, clone);
+        return netResp;
+      }
+    } catch (e) {
+      // 网络请求失败
+      return null;
+    }
+    return null;
+  }
+  
+  // 相对路径：进行大小写兼容处理
   const pathname = url.pathname;
   const variants = getCaseVariants(pathname);
   

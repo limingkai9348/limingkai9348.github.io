@@ -392,6 +392,14 @@ function getCaseVariants(path) {
 
 // 尝试加载资源，支持大小写兼容
 function loadResourceWithFallback(element, path, isImage = false) {
+  // 检测是否是在线URL（http:// 或 https:// 开头）
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    // 在线URL：直接使用，不进行大小写变体处理
+    element.src = path;
+    return;
+  }
+  
+  // 相对路径：进行大小写兼容处理
   const variants = getCaseVariants(path);
   let currentIndex = 0;
   

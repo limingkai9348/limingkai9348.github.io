@@ -6,5 +6,13 @@
     "audio": "assets/music/2000.mp3",
     "description": "高高的青山上，萱草花开放。采一朵，送给我，小小的姑娘。把它别在你的发梢，捧在我心上。陪着你，长大了，再看你做新娘。如果有一天，心事去了远方，摘朵花瓣做翅膀，迎着风飞扬。如果有一天，懂了忧伤。想着它，就会有，好梦一场。",
     "name_english": "张小斐"
+  },
+  {
+    "id": 2001,
+    "name": "好妈妈",
+    "image": "assets/music/2001.JPG",
+    "audio": "https://96f.1ting.com/local_to_cube_202004121813/96kmp3/2019/07/13X/13c_Qianwen/01.mp3",
+    "description": "我有一个好妈妈",
+    "name_english": ""
   }
 ]
