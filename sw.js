@@ -83,39 +83,40 @@ async function cacheResources(resources, clientId) {
   const batchSize = 10;
   for (let i = 0; i < resources.length; i += batchSize) {
     const batch = resources.slice(i, i + batchSize);
-    await Promise.allSettled(
+    const results = await Promise.allSettled(
       batch.map(url => {
         // 确保路径以 / 开头
         const fullUrl = url.startsWith('/') ? url : '/' + url;
         return fetch(fullUrl).then(res => {
           if (res.ok) {
-            return cache.put(fullUrl, res).then(() => {
-              success++;
-              // 发送进度更新
-              sendToClient(clientId, {
-                type: 'cacheProgress',
-                current: success + failed,
-                total: total,
-                url: fullUrl
-              });
-            });
+            return cache.put(fullUrl, res);
           } else {
-            failed++;
             throw new Error(`HTTP ${res.status}`);
           }
-        }).catch(err => {
-          failed++;
-          console.warn(`缓存失败: ${fullUrl}`, err);
-          // 发送进度更新
-          sendToClient(clientId, {
-            type: 'cacheProgress',
-            current: success + failed,
-            total: total,
-            url: fullUrl
-          });
         });
       })
     );
+    
+    // 统计本批次的结果
+    results.forEach((result, index) => {
+      const url = batch[index];
+      const fullUrl = url.startsWith('/') ? url : '/' + url;
+      
+      if (result.status === 'fulfilled') {
+        success++;
+      } else {
+        failed++;
+        console.warn(`缓存失败: ${fullUrl}`, result.reason);
+      }
+      
+      // 发送进度更新
+      sendToClient(clientId, {
+        type: 'cacheProgress',
+        current: success + failed,
+        total: total,
+        url: fullUrl
+      });
+    });
   }
   
   // 发送完成消息
