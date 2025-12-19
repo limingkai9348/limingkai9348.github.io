@@ -288,9 +288,20 @@ function goBack() {
 }
 
 // =====================
+// 播放音频函数（带错误处理）
+// =====================
+function playAudio() {
+  if (audio.src) {
+    audio.play().catch(err => {
+      console.error('播放音频失败:', err);
+    });
+  }
+}
+
+// =====================
 // 点击播放（只点击图片区域时播放）
 // =====================
-document.querySelector('.image-container').onclick = () => audio.play();
+document.querySelector('.image-container').onclick = () => playAudio();
 
 // =====================
 // 滑动切换（只在图片区域）
@@ -298,6 +309,7 @@ document.querySelector('.image-container').onclick = () => audio.play();
 let startX = 0;
 let startY = 0;
 let isImageArea = false;
+let hasMoved = false;
 
 const imageContainer = document.querySelector('.image-container');
 
@@ -305,6 +317,12 @@ imageContainer.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
   isImageArea = true;
+  hasMoved = false;
+});
+
+imageContainer.addEventListener('touchmove', e => {
+  if (!isImageArea) return;
+  hasMoved = true;
 });
 
 imageContainer.addEventListener('touchend', e => {
@@ -314,12 +332,16 @@ imageContainer.addEventListener('touchend', e => {
   const dy = Math.abs(e.changedTouches[0].clientY - startY);
   
   // 只有水平滑动距离大于垂直滑动距离，且超过50px时才切换
-  if (Math.abs(dx) > dy && Math.abs(dx) > 50) {
+  if (hasMoved && Math.abs(dx) > dy && Math.abs(dx) > 50) {
     if (dx > 50) prev();
     if (dx < -50) next();
+  } else if (!hasMoved) {
+    // 如果没有滑动，则播放音频
+    playAudio();
   }
   
   isImageArea = false;
+  hasMoved = false;
 });
 
 // =====================
@@ -345,7 +367,7 @@ document.addEventListener('wheel', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') prev();
   if (e.key === 'ArrowRight') next();
-  if (e.key === ' ') audio.play();
+  if (e.key === ' ') playAudio();
 });
 </script>
 
