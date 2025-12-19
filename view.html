@@ -2,6 +2,10 @@
 <html lang="zh">
 <head>
 <meta charset="utf-8">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="宝宝识物">
 <meta
   name="viewport"
   content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
@@ -23,7 +27,7 @@ html, body {
 }
 
 body {
-  background: #f5f5f5;
+  background: linear-gradient(135deg, #fff9e6 0%, #ffe8cc 100%);
   touch-action: pan-x;
 }
 
@@ -35,10 +39,17 @@ body {
   padding: 10px 16px;
   font-size: 20px;
   font-weight: bold;
-  background: rgba(255,255,255,0.85);
+  background: linear-gradient(135deg, #ffd89b 0%, #ffb347 100%);
+  color: #fff;
   border-radius: 999px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.3);
   z-index: 10;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back:active {
+  transform: scale(0.95);
 }
 
 /* 卡片主体 */
@@ -52,6 +63,18 @@ body {
   padding-bottom: 100px;
   box-sizing: border-box;
   margin: 0 auto;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 图片容器 - 1:1比例，100%宽度 */
@@ -61,19 +84,24 @@ body {
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(255, 200, 150, 0.15);
+  animation: fadeIn 0.4s ease-out;
 }
 
 /* iPad和宽屏设备适配 */
 @media (min-width: 768px) {
   .card {
     width: 100%;
-    max-width: 720px;
-    background: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    max-width: 680px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(255, 200, 150, 0.15);
   }
   
   .image-container {
     width: 100%;
+    border-radius: 24px;
   }
   
   .word {
@@ -91,6 +119,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 24px;
 }
 
 /* 标题 */
@@ -100,21 +129,28 @@ body {
   font-weight: bold;
   text-align: center;
   width: 100%;
+  color: #d97706;
+  text-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+  animation: fadeIn 0.5s ease-out;
 }
 
 /* 描述文本 */
 .description {
   margin-top: 16px;
-  padding: 0 20px;
+  padding: 16px 24px;
   font-size: 18px;
   line-height: 1.6;
-  color: #666;
+  color: #8b5a3c;
   text-align: center;
   max-width: 100%;
   max-height: 120px;
   overflow-y: auto;
   word-wrap: break-word;
   -webkit-overflow-scrolling: touch;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.6s ease-out;
 }
 
 /* 描述文本滚动条样式 */
@@ -127,7 +163,7 @@ body {
 }
 
 .description::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: rgba(217, 119, 6, 0.3);
   border-radius: 2px;
 }
 
@@ -135,17 +171,20 @@ body {
 .nav {
   position: fixed;
   bottom: 20px;
-  width: 56px;
-  height: 56px;
-  line-height: 56px;
+  width: 64px;
+  height: 64px;
+  line-height: 64px;
   text-align: center;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
-  background: rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, #ffb347 0%, #ff8c42 100%);
   color: #fff;
   border-radius: 50%;
   z-index: 10;
   user-select: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .prev {
@@ -171,8 +210,14 @@ body {
   }
 }
 
+.nav:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 140, 66, 0.4);
+}
+
 .nav:active {
-  background: rgba(0,0,0,0.55);
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(255, 140, 66, 0.3);
 }
 </style>
 </head>
@@ -189,8 +234,8 @@ body {
   <div class="description" id="description"></div>
 </div>
 
-<div class="nav prev" onclick="prev()">◀</div>
-<div class="nav next" onclick="next()">▶</div>
+<div class="nav prev" onclick="prev()">⭐</div>
+<div class="nav next" onclick="next()">⭐</div>
 
 <audio id="audio"></audio>
 
@@ -299,6 +344,12 @@ const description = document.getElementById('description');
 
 function show() {
   const item = cards[index];
+  
+  // 添加淡出效果
+  const card = document.getElementById('card');
+  card.style.opacity = '0.7';
+  card.style.transform = 'translateY(5px)';
+  
   // 使用大小写兼容的方式加载图片和音频
   loadResourceWithFallback(image, item.image, true);
   loadResourceWithFallback(audio, item.audio, false);
@@ -317,6 +368,13 @@ function show() {
   } else {
     description.style.display = 'none';
   }
+
+  // 恢复淡入效果
+  setTimeout(() => {
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
+    card.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+  }, 50);
 
   preloadNext();
 }
