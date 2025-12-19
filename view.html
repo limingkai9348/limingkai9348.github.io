@@ -196,9 +196,24 @@ body {
 <div class="nav prev" onclick="prev()">◀</div>
 <div class="nav next" onclick="next()">▶</div>
 
-<audio id="audio"></audio>
+<audio id="audio" preload="auto" playsinline webkit-playsinline></audio>
 
 <script>
+// =====================
+// iOS Web App 音频初始化
+// =====================
+// 检测是否在iOS Web App中运行
+const isIOSWebApp = window.navigator.standalone === true || 
+                    (window.matchMedia('(display-mode: standalone)').matches && /iPad|iPhone|iPod/.test(navigator.userAgent));
+
+// iOS Web App需要特殊的音频处理
+if (isIOSWebApp) {
+  // 确保音频元素可以自动播放（在用户交互后）
+  const audio = document.getElementById('audio');
+  audio.setAttribute('playsinline', '');
+  audio.setAttribute('webkit-playsinline', '');
+}
+
 // =====================
 // 注册 Service Worker（离线）
 // =====================
@@ -305,7 +320,17 @@ function show() {
   const item = cards[index];
   // 使用大小写兼容的方式加载图片和音频
   loadResourceWithFallback(image, item.image, true);
-  loadResourceWithFallback(audio, item.audio, false);
+  
+  // 预加载音频（但不自动播放，等待用户交互）
+  // 使用loadResourceWithFallback来确保大小写兼容
+  if (item.audio) {
+    // 先暂停并重置当前音频
+    audio.pause();
+    audio.currentTime = 0;
+    // 使用兼容方式加载音频
+    loadResourceWithFallback(audio, item.audio, false);
+  }
+  
   word.textContent = item.name + (item.name_english ? ' ' + item.name_english : '');
   
   // 显示描述文本
@@ -361,37 +386,83 @@ function goBack() {
 }
 
 // =====================
-// 播放音频函数（带错误处理）
+// 播放音频函数（带错误处理，iOS兼容）
 // =====================
 function playAudio() {
-  // 检查音频是否已加载，如果src为空则尝试重新加载
-  if (!audio.src || audio.src === window.location.href) {
-    const item = cards[index];
-    if (item && item.audio) {
-      loadResourceWithFallback(audio, item.audio, false);
-      // 等待音频加载完成后再播放
-      audio.addEventListener('loadeddata', () => {
-        audio.play().catch(err => {
-          console.error('播放音频失败:', err);
-        });
-      }, { once: true });
-      return;
+  const item = cards[index];
+  if (!item || !item.audio) return;
+  
+  // iOS Web App要求：必须在用户交互事件中同步调用play()
+  // 检查当前音频是否匹配当前卡片
+  const currentAudioPath = item.audio;
+  const variants = getCaseVariants(currentAudioPath);
+  let audioMatches = false;
+  
+  if (audio.src) {
+    const currentSrc = decodeURIComponent(audio.src);
+    for (const variant of variants) {
+      if (currentSrc.includes(variant) || currentSrc.endsWith(variant)) {
+        audioMatches = true;
+        break;
+      }
     }
   }
   
-  if (audio.src) {
-    // 如果音频已暂停，重新播放
-    if (audio.paused) {
-      audio.play().catch(err => {
-        console.error('播放音频失败:', err);
-      });
-    } else {
-      // 如果正在播放，重新开始
-      audio.currentTime = 0;
-      audio.play().catch(err => {
-        console.error('播放音频失败:', err);
+  if (audioMatches && audio.readyState >= 2) {
+    // 音频已加载且匹配，直接播放
+    audio.currentTime = 0;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        console.error('播放音频失败，尝试重新加载:', err);
+        // 如果播放失败，重新加载
+        reloadAndPlay();
       });
     }
+  } else {
+    // 音频未加载、不匹配或加载中，重新加载并播放
+    reloadAndPlay();
+  }
+  
+  // 重新加载并播放的辅助函数
+  function reloadAndPlay() {
+    let variantIndex = 0;
+    
+    function tryPlay() {
+      if (variantIndex >= variants.length) {
+        console.error('无法播放音频: 所有变体都失败');
+        return;
+      }
+      
+      // 设置音频源并立即加载
+      audio.src = variants[variantIndex];
+      // iOS Web App中，必须在用户交互中同步调用load()和play()
+      audio.load();
+      
+      // 立即尝试播放（iOS要求同步调用）
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          // 播放成功
+          console.log('音频播放成功:', variants[variantIndex]);
+        }).catch(err => {
+          console.error(`播放变体 ${variantIndex} 失败:`, err);
+          variantIndex++;
+          // 尝试下一个变体
+          if (variantIndex < variants.length) {
+            tryPlay();
+          }
+        });
+      } else {
+        // 如果play()返回undefined（旧浏览器），直接尝试下一个
+        variantIndex++;
+        if (variantIndex < variants.length) {
+          setTimeout(tryPlay, 100);
+        }
+      }
+    }
+    
+    tryPlay();
   }
 }
 
@@ -448,8 +519,13 @@ imageContainer.addEventListener('touchend', e => {
     touchHandled = true;
   } else if (!hasMoved) {
     // 如果没有滑动，则播放音频
+    // iOS要求：必须在用户交互事件中同步调用
     e.preventDefault();
+    e.stopPropagation();
+    
+    // 立即播放音频（同步调用，不等待）
     playAudio();
+    
     // 标记触摸事件已处理，防止点击事件重复触发
     touchHandled = true;
   }
