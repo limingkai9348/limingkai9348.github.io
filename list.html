@@ -35,10 +35,12 @@ h1 {
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  flex: 0 0 calc(33.333% - 6px);
+  /* 3格布局：减去2个gap（8px * 2 = 16px）后平均分配 */
+  flex: 0 0 calc((100% - 16px) / 3);
   min-width: 0;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 .item:active {
   transform: scale(0.95);
@@ -48,7 +50,8 @@ h1 {
 /* iPad 上显示4个 */
 @media (min-width: 768px) {
   .item {
-    flex: 0 0 calc(25% - 6px);
+    /* 4格布局：减去3个gap（8px * 3 = 24px）后平均分配 */
+    flex: 0 0 calc((100% - 24px) / 4);
     font-size: 20px;
     padding: 18px 8px;
   }
