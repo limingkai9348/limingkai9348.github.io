@@ -1,26 +1,10 @@
 [
   {
     "id": 900,
-    "name": "静夜思 李白",
+    "name": "静夜思",
     "image": "assets/poetry/900.JPG",
     "audio": "assets/poetry/900.mp3",
     "description": "床前明月光，疑是地上霜。\n举头望明月，低头思故乡。",
-    "name_english": ""
-  },
-  {
-    "id": 901,
-    "name": "",
-    "name_english": "",
-    "description": "",
-    "image": "assets/fruits/901.jpg",
-    "audio": "assets/fruits/901.mp3"
-  },
-  {
-    "id": 902,
-    "name": "",
-    "name_english": "",
-    "description": "",
-    "image": "assets/fruits/902.jpg",
-    "audio": "assets/fruits/902.mp3"
+    "name_english": "李白"
   }
 ]
