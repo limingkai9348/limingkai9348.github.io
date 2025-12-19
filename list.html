@@ -32,15 +32,40 @@ h1 {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+/* 返回按钮 */
+.back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  font-size: 20px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.85);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+
+
 </style>
 </head>
 
 <body>
 
 <h1 id="title">请选择</h1>
+<div class="back" onclick="goBack()">← 返回</div>
 <div class="list" id="list"></div>
 
 <script>
+
+
+function goBack() {
+  location.href = 'index.html';
+}
+
+
 const pack = new URLSearchParams(location.search).get('pack');
 if (!pack) location.href = 'index.html';
 
