@@ -58,77 +58,46 @@ body {
   margin: 0 auto;
 }
 
-/* 图片容器 - CD效果 */
+/* 图片容器 - 黑胶唱片效果 */
 .image-container {
-  width: 100%;
-  max-width: 100%;
+  width: 95%;
+  max-width: 95%;
   aspect-ratio: 1 / 1;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 50%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-              inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-              inset 0 0 60px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-  /* CD光泽效果 */
+  transition: transform 0.1s ease-out;
+  /* 黑胶唱片外圈黑色胶效果 */
+  border: 8px solid #1a1a1a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+              inset 0 0 20px rgba(0, 0, 0, 0.3);
+  /* 黑胶唱片光泽效果 */
   background: radial-gradient(
     circle at 30% 30%,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 20%,
-    transparent 50%
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 15%,
+    transparent 40%
   );
 }
 
-/* CD点击反馈 */
+/* 黑胶唱片点击反馈 */
 .image-container:active {
   transform: scale(0.98);
 }
 
-/* CD旋转动画 */
+/* 黑胶唱片旋转动画 */
 .image-container.playing {
-  animation: cdRotate 20s linear infinite;
+  animation: vinylRotate 20s linear infinite;
 }
 
-@keyframes cdRotate {
+@keyframes vinylRotate {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
-
-/* CD中心圆孔 */
-.image-container::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #f5f5f5;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2),
-              0 0 0 2px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* CD内圈效果 */
-.image-container::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  z-index: 1;
-  pointer-events: none;
 }
 
 /* iPad和宽屏设备适配 */
@@ -142,6 +111,7 @@ body {
   
   .image-container {
     width: 100%;
+    max-width: 100%;
   }
   
   .word {
@@ -160,17 +130,6 @@ body {
   object-fit: cover;
   display: block;
   border-radius: 50%;
-  /* 确保图片在CD中心圆孔处透明 */
-  mask: radial-gradient(
-    circle at center,
-    transparent 30px,
-    black 31px
-  );
-  -webkit-mask: radial-gradient(
-    circle at center,
-    transparent 30px,
-    black 31px
-  );
 }
 
 /* 标题 */
