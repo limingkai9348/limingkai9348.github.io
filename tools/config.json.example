@@ -1,0 +1,116 @@
+{
+  "openai_api_key": "your-openai-api-key-here",
+  "openai_model": "gpt-4",
+  "image_model": "dall-e-3",
+  "image_size": "1024x1024",
+  "image_quality": "standard",
+  "mp3_generation": {
+    "app_window_title": "剪映专业版",
+    "delay_between_items": 1,
+    "skip_existing": false,
+    "use_dpi_scaling": false,
+    "coordinate_scale": 1.0,
+    "coordinate_offset": [0, 0],
+    "steps": [
+      {
+        "type": "activate_window",
+        "description": "激活剪映专业版窗口"
+      },
+      {
+        "type": "click",
+        "description": "点击第一个输入框",
+        "params": {
+          "position": [2280, 450],
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "select_all",
+        "description": "全选",
+        "params": {
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "delete",
+        "description": "删除",
+        "params": {
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "generate_text",
+        "description": "生成MP3文本"
+      },
+      {
+        "type": "copy_to_clipboard",
+        "description": "将MP3文本复制到剪切板"
+      },
+      {
+        "type": "paste",
+        "description": "粘贴文本",
+        "params": {
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "click",
+        "description": "点击生成按钮",
+        "params": {
+          "position": [2412, 272],
+          "wait_after": 3
+        }
+      },
+      {
+        "type": "click",
+        "description": "点击文件名输入框",
+        "params": {
+          "position": [1538, 637],
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "select_all",
+        "description": "全选",
+        "params": {
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "delete",
+        "description": "删除",
+        "params": {
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "copy_id_to_clipboard",
+        "description": "将ID复制到剪切板"
+      },
+      {
+        "type": "paste",
+        "description": "粘贴ID",
+        "params": {
+          "wait_after": 0.1
+        }
+      },
+      {
+        "type": "click",
+        "description": "点击保存按钮",
+        "params": {
+          "position": [1471, 1243],
+          "wait_after": 1
+        }
+      },
+      {
+        "type": "click",
+        "description": "点击确认按钮",
+        "params": {
+          "position": [1546, 1080],
+          "wait_after": 0.1
+        }
+      }
+    ]
+  }
+}
+
