@@ -301,6 +301,38 @@ async function fetchWithCaseFallback(request) {
   
   // 相对路径：进行大小写兼容处理
   const pathname = url.pathname;
+  const isHtml = pathname.match(/\.html$|^\/$/) || pathname === '/';
+  
+  // 对于 HTML 文件，查找缓存时忽略查询参数（因为同一个 HTML 文件可以有不同的查询参数）
+  if (isHtml) {
+    // 先尝试用完整 URL 查找（可能之前已经缓存过带参数的版本）
+    let cachedResp = await caches.match(request);
+    if (cachedResp) {
+      return cachedResp;
+    }
+    
+    // 如果没找到，尝试只用路径名查找（忽略查询参数）
+    const pathOnlyRequest = new Request(url.pathname, {
+      method: request.method,
+      headers: request.headers,
+      mode: request.mode,
+      credentials: request.credentials,
+      cache: request.cache,
+      redirect: request.redirect,
+      referrer: request.referrer,
+      referrerPolicy: request.referrerPolicy,
+      integrity: request.integrity
+    });
+    cachedResp = await caches.match(pathOnlyRequest);
+    if (cachedResp) {
+      // 找到缓存，但用原始请求 URL 保存（保持查询参数）
+      const clone = cachedResp.clone();
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, clone);
+      return cachedResp;
+    }
+  }
+  
   const variants = getCaseVariants(pathname);
   
   // 先尝试从缓存查找（包括所有大小写变体）
@@ -312,13 +344,38 @@ async function fetchWithCaseFallback(request) {
     }
   }
   
+  // 对于 HTML 文件，也尝试只用路径名查找（忽略查询参数）
+  if (isHtml) {
+    for (const variant of variants) {
+      const variantRequest = new Request(variant, {
+        method: request.method,
+        headers: request.headers,
+        mode: request.mode,
+        credentials: request.credentials,
+        cache: request.cache,
+        redirect: request.redirect,
+        referrer: request.referrer,
+        referrerPolicy: request.referrerPolicy,
+        integrity: request.integrity
+      });
+      const cachedResp = await caches.match(variantRequest);
+      if (cachedResp) {
+        // 找到缓存，用原始请求 URL 保存
+        const clone = cachedResp.clone();
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(request, clone);
+        return cachedResp;
+      }
+    }
+  }
+  
   // 缓存中没有，尝试从网络获取（包括所有大小写变体）
   for (const variant of variants) {
     const variantUrl = new URL(variant, request.url);
     try {
       const netResp = await fetch(variantUrl);
       if (netResp && netResp.status === 200) {
-        // 成功获取，缓存原始请求URL（保持一致性）
+        // 成功获取，缓存原始请求URL（保持一致性，包括查询参数）
         const clone = netResp.clone();
         if (request.url.startsWith(self.location.origin)) {
           const cache = await caches.open(CACHE_NAME);
@@ -356,11 +413,21 @@ self.addEventListener('fetch', event => {
         if (resp) {
           return resp;
         }
+        // 如果是 HTML 文件，返回 HTML 格式的错误页面
+        if (isHtml) {
+          return new Response('<!DOCTYPE html><html><head><meta charset="utf-8"><title>错误</title></head><body style="font-family:system-ui;padding:20px;text-align:center;"><h1>网络不可用</h1><p>且缓存中无此资源</p><p><a href="/">返回首页</a></p></body></html>', {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: new Headers({
+              'Content-Type': 'text/html; charset=utf-8'
+            })
+          });
+        }
         return new Response('网络不可用，且缓存中无此资源', {
           status: 503,
           statusText: 'Service Unavailable',
           headers: new Headers({
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
           })
         });
       })
@@ -373,11 +440,21 @@ self.addEventListener('fetch', event => {
           return resp;
         }
         // 如果网络和缓存都失败，返回错误响应
+        // 如果是 HTML 文件，返回 HTML 格式的错误页面
+        if (isHtml) {
+          return new Response('<!DOCTYPE html><html><head><meta charset="utf-8"><title>错误</title></head><body style="font-family:system-ui;padding:20px;text-align:center;"><h1>网络不可用</h1><p>且缓存中无此资源</p><p><a href="/">返回首页</a></p></body></html>', {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: new Headers({
+              'Content-Type': 'text/html; charset=utf-8'
+            })
+          });
+        }
         return new Response('网络不可用，且缓存中无此资源', {
           status: 503,
           statusText: 'Service Unavailable',
           headers: new Headers({
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
           })
         });
       })
@@ -406,11 +483,22 @@ self.addEventListener('fetch', event => {
               return cachedResp;
             }
             // 如果缓存也没有，返回一个基本的错误响应
+            const url = new URL(event.request.url);
+            const isHtmlFile = url.pathname.match(/\.html$|^\/$/) || url.pathname === '/';
+            if (isHtmlFile) {
+              return new Response('<!DOCTYPE html><html><head><meta charset="utf-8"><title>错误</title></head><body style="font-family:system-ui;padding:20px;text-align:center;"><h1>网络不可用</h1><p>且缓存中无此资源</p><p><a href="/">返回首页</a></p></body></html>', {
+                status: 503,
+                statusText: 'Service Unavailable',
+                headers: new Headers({
+                  'Content-Type': 'text/html; charset=utf-8'
+                })
+              });
+            }
             return new Response('网络不可用，且缓存中无此资源', {
               status: 503,
               statusText: 'Service Unavailable',
               headers: new Headers({
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
               })
             });
           });
