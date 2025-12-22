@@ -371,6 +371,11 @@ fetch(`data/${pack}.json`)
   .catch(err => {
     console.error('加载数据失败:', err);
     progressIndicator.textContent = '加载失败';
+    const word = document.getElementById('word');
+    const description = document.getElementById('description');
+    word.textContent = '加载失败';
+    description.textContent = '请检查网络连接或刷新页面重试';
+    description.style.display = 'block';
   });
 
 // =====================

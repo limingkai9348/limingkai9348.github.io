@@ -110,6 +110,11 @@ fetch(`data/${pack}.json`)
       };
       list.appendChild(div);
     });
+  })
+  .catch(err => {
+    console.error('加载数据失败:', err);
+    const list = document.getElementById('list');
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">加载失败，请检查网络连接</div>';
   });
 </script>
 

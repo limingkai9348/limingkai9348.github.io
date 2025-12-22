@@ -274,6 +274,14 @@ fetch(`data/${pack}.json`)
   .then(data => {
     cards = data;
     show();
+  })
+  .catch(err => {
+    console.error('加载数据失败:', err);
+    const word = document.getElementById('word');
+    const description = document.getElementById('description');
+    word.textContent = '加载失败';
+    description.textContent = '请检查网络连接或刷新页面重试';
+    description.style.display = 'block';
   });
 
 // =====================

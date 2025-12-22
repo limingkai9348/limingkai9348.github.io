@@ -346,9 +346,10 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const isImageOrAudio = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|mp3)$/i);
   const isJson = url.pathname.match(/\.json$/i);
+  const isHtml = url.pathname.match(/\.html$|^\/$/) || url.pathname === '/';
   
-  // 对于图片、音频和JSON，根据缓存策略处理
-  if ((isImageOrAudio || isJson) && cacheFirstMode) {
+  // 对于图片、音频、JSON和HTML，根据缓存策略处理
+  if ((isImageOrAudio || isJson || isHtml) && cacheFirstMode) {
     // 缓存优先模式：先查缓存，缓存没有再请求网络（支持大小写兼容）
     event.respondWith(
       fetchWithCaseFallback(event.request).then(resp => {
@@ -364,7 +365,7 @@ self.addEventListener('fetch', event => {
         });
       })
     );
-  } else if (isImageOrAudio || isJson) {
+  } else if (isImageOrAudio || isJson || isHtml) {
     // 网络优先模式：先请求网络，失败再使用缓存（支持大小写兼容）
     event.respondWith(
       fetchWithCaseFallback(event.request).then(resp => {
