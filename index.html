@@ -226,7 +226,13 @@ cacheButton.onclick = async () => {
     const packs = await packsResponse.json();
     const resources = new Set();
     
+    // 添加 packs.json 本身
+    resources.add('data/packs.json');
+    
     for (const pack of packs) {
+      // 添加每个 pack 的 JSON 文件
+      resources.add(`data/${pack.id}.json`);
+      
       const packResponse = await fetch(`data/${pack.id}.json`);
       const cards = await packResponse.json();
       cards.forEach(card => {
@@ -303,8 +309,9 @@ async function updateCacheStatus() {
     const keys = await cache.keys();
     const imageCount = keys.filter(k => k.url.match(/\.(jpg|jpeg|png|gif|webp)$/i)).length;
     const audioCount = keys.filter(k => k.url.match(/\.mp3$/i)).length;
+    const jsonCount = keys.filter(k => k.url.match(/\.json$/i)).length;
     const mode = cacheSwitch.classList.contains('active') ? '缓存优先' : '网络优先';
-    cacheStatus.textContent = `已缓存: ${imageCount} 图片, ${audioCount} 音频 | 模式: ${mode}`;
+    cacheStatus.textContent = `已缓存: ${imageCount} 图片, ${audioCount} 音频, ${jsonCount} JSON | 模式: ${mode}`;
   } catch (error) {
     cacheStatus.textContent = '无法读取缓存状态';
   }
