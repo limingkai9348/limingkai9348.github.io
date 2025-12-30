@@ -69,17 +69,67 @@ body {
   cursor: pointer;
   transition: transform 0.1s ease-out;
   box-sizing: border-box;
-  /* 黑胶唱片外圈黑色胶效果 - 使用box-shadow */
-  box-shadow: 0 0 0 8px #1a1a1a,
-              0 16px 64px rgba(0, 0, 0, 0.4),
-              inset 0 0 20px rgba(0, 0, 0, 0.3);
-  /* 黑胶唱片光泽效果 */
+  /* 多层边框：外纯黑边 + 宽黑灰色渐变带 + 内纯黑边 */
+  box-shadow: 
+    0 0 0 12px #000,                    /* 外纯黑边 */
+    0 0 0 24px rgba(35, 35, 35, 0.98),  /* 宽黑灰色带外缘 */
+    0 0 0 40px rgba(55, 55, 55, 0.95),  /* 宽黑灰色带中段 */
+    0 0 0 56px rgba(35, 35, 35, 0.98),  /* 宽黑灰色带内缘 */
+    0 0 0 64px #000,                    /* 内纯黑边 */
+    0 10px 40px rgba(0, 0, 0, 0.6),     /* 外阴影 - 增强立体感 */
+    0 4px 20px rgba(0, 0, 0, 0.4),       /* 中阴影 */
+    inset 0 0 30px rgba(0, 0, 0, 0.3);  /* 内阴影 */
+  /* 黑胶唱片纹路效果 - 精准还原同心圆纹路 */
+  background: 
+    /* 细密纹路层 - 模拟黑胶唱片的同心圆纹路 */
+    repeating-radial-gradient(
+      circle,
+      transparent 0px,
+      transparent 1.5px,
+      rgba(0, 0, 0, 0.04) 1.5px,
+      rgba(0, 0, 0, 0.04) 3px
+    ),
+    /* 中等纹路层 */
+    repeating-radial-gradient(
+      circle,
+      transparent 0px,
+      transparent 8px,
+      rgba(0, 0, 0, 0.02) 8px,
+      rgba(0, 0, 0, 0.02) 10px
+    ),
+    /* 光泽效果 - 模拟黑胶表面反光 */
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 8%,
+      rgba(255, 255, 255, 0.04) 15%,
+      rgba(255, 255, 255, 0.01) 25%,
+      transparent 45%
+    ),
+    /* 基础背景 - 深灰色 */
+    #1a1a1a;
+  /* 边缘倒角效果 - 模拟黑胶边缘的圆润感 */
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  /* 边缘高光 */
+  background-clip: padding-box;
+}
+
+/* 黑胶唱片边缘倒角效果 */
+.image-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
   background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.05) 15%,
-    transparent 40%
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 5%
   );
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* 黑胶唱片点击反馈 */
@@ -87,18 +137,9 @@ body {
   transform: scale(0.98);
 }
 
-/* 黑胶唱片旋转动画 */
+/* 黑胶唱片旋转 - 通过 JavaScript 控制，保持角度 */
 .image-container.playing {
-  animation: vinylRotate 20s linear infinite;
-}
-
-@keyframes vinylRotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  will-change: transform;
 }
 
 /* iPad和宽屏设备适配 */
@@ -125,12 +166,28 @@ body {
   }
 }
 
+/* 图片标签区域 - 位于黑胶唱片中心，在内黑边之后 */
 .card img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 72px;
+  left: 72px;
+  width: calc(100% - 144px);
+  height: calc(100% - 144px);
   object-fit: cover;
   display: block;
   border-radius: 50%;
+  z-index: 2;
+  /* 图片标签的阴影和边框 */
+  box-shadow: 
+    0 0 0 2px #000,
+    inset 0 0 10px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  /* 图片标签的光泽 */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  );
 }
 
 /* 标题 */
@@ -357,6 +414,13 @@ const word  = document.getElementById('word');
 const audio = document.getElementById('audio');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const progressIndicator = document.getElementById('progressIndicator');
+const imageContainer = document.querySelector('.image-container');
+
+// 保存当前旋转角度和动画帧
+let currentRotation = 0;
+let rotationAnimationFrame = null;
+let lastRotationTime = null;
+const ROTATION_SPEED = 360 / 20; // 每秒旋转度数（20秒一圈）
 
 // 设置音频循环播放
 audio.loop = true;
@@ -557,14 +621,69 @@ function updatePlayState() {
   if (audio.paused) {
     playPauseBtn.textContent = '▶';
     playPauseBtn.classList.remove('playing');
-    // 停止CD旋转
-    imageContainer.classList.remove('playing');
+    // 停止旋转动画，但保持当前角度
+    stopRotation();
   } else {
     playPauseBtn.textContent = '⏸';
     playPauseBtn.classList.add('playing');
-    // 开始CD旋转
-    imageContainer.classList.add('playing');
+    // 开始旋转，从当前角度继续
+    startRotation();
   }
+}
+
+// =====================
+// 开始旋转（保持当前角度）
+// =====================
+function startRotation() {
+  if (rotationAnimationFrame) return; // 已经在旋转
+  
+  imageContainer.classList.add('playing');
+  lastRotationTime = performance.now();
+  
+  function animate(currentTime) {
+    if (!imageContainer.classList.contains('playing')) {
+      rotationAnimationFrame = null;
+      return;
+    }
+    
+    const deltaTime = (currentTime - lastRotationTime) / 1000; // 转换为秒
+    currentRotation = (currentRotation + ROTATION_SPEED * deltaTime) % 360;
+    imageContainer.style.transform = `rotate(${currentRotation}deg)`;
+    
+    lastRotationTime = currentTime;
+    rotationAnimationFrame = requestAnimationFrame(animate);
+  }
+  
+  rotationAnimationFrame = requestAnimationFrame(animate);
+}
+
+// =====================
+// 停止旋转（保持当前角度）
+// =====================
+function stopRotation() {
+  // 取消动画帧
+  if (rotationAnimationFrame) {
+    cancelAnimationFrame(rotationAnimationFrame);
+    rotationAnimationFrame = null;
+  }
+  
+  // 获取当前计算后的 transform 值以保存角度
+  const computedStyle = window.getComputedStyle(imageContainer);
+  const matrix = computedStyle.transform;
+  
+  if (matrix && matrix !== 'none') {
+    // 解析 matrix 获取当前角度
+    const values = matrix.split('(')[1].split(')')[0].split(',');
+    const a = parseFloat(values[0]);
+    const b = parseFloat(values[1]);
+    const angle = Math.atan2(b, a) * (180 / Math.PI);
+    // 确保角度在 0-360 范围内
+    currentRotation = ((angle % 360) + 360) % 360;
+  }
+  
+  // 移除动画类，使用 transform 保持当前角度
+  imageContainer.classList.remove('playing');
+  imageContainer.style.transform = `rotate(${currentRotation}deg)`;
 }
 
 // =====================
@@ -645,8 +764,6 @@ let startY = 0;
 let isImageArea = false;
 let hasMoved = false;
 let touchHandled = false; // 防止触摸事件和点击事件重复触发
-
-const imageContainer = document.querySelector('.image-container');
 
 // =====================
 // 点击播放（只点击图片区域时播放/暂停）
